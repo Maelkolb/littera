@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use littera, please cite it as below."
+title: "littera: placing transcriptions on historical line images, letter by letter"
+type: software
+authors:
+  - family-names: Perschl
+    given-names: Tobias
+    alias: Maelkolb
+version: 0.1.0
+date-released: 2026-11-18
+license: MIT
+repository-code: "https://github.com/Maelkolb/littera"
+keywords:
+  - handwritten text recognition
+  - forced alignment
+  - historical documents
+  - digital editions

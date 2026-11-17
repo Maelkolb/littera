@@ -1,0 +1,852 @@
+{
+ "even|gw20-words": {
+  "errors": 0,
+  "lines": 657,
+  "word": {
+   "n": 9720,
+   "mean": 0.8692,
+   "median": 0.6614,
+   "p90": 1.8451,
+   "within_0.25": 0.2071,
+   "within_0.5": 0.399,
+   "words": 4860,
+   "iou": 0.6314,
+   "both_ends_within_0.5": 0.2016,
+   "q_auc": 0.5,
+   "q_ece": 0.2984
+  },
+  "gap_rate": 0.4204,
+  "gaps": 4203,
+  "placer": "even",
+  "set": "gw20-words",
+  "shards": 2
+ },
+ "even|iam-words": {
+  "errors": 0,
+  "lines": 999,
+  "word": {
+   "n": 15572,
+   "mean": 0.5923,
+   "median": 0.4515,
+   "p90": 1.3383,
+   "within_0.25": 0.3338,
+   "within_0.5": 0.5353,
+   "words": 7786,
+   "iou": 0.7009,
+   "both_ends_within_0.5": 0.3606,
+   "q_auc": 0.5,
+   "q_ece": 0.1394
+  },
+  "gap_rate": 0.5686,
+  "gaps": 6787,
+  "placer": "even",
+  "set": "iam-words",
+  "shards": 3
+ },
+ "even|mismatch-heldout": {
+  "errors": 0,
+  "lines": 3785,
+  "gap_rate": 0.1858,
+  "gaps": 20106,
+  "fit": {
+   "rows": 3785,
+   "line_fit_auc": 0.5,
+   "line_fit_auc_delete": 0.5,
+   "line_fit_auc_replace": 0.5,
+   "line_fit_auc_swap": 0.5,
+   "line_fit_auc_swap-doc": 0.5,
+   "word_fit_auc": 0.5,
+   "line_fit_mean_right": 0.5
+  },
+  "by_source": {
+   "abp": {
+    "lines": 463,
+    "gap_rate": 0.1116,
+    "gaps": 1766,
+    "fit": {
+     "rows": 463,
+     "line_fit_auc": 0.5,
+     "line_fit_auc_delete": 0.5,
+     "line_fit_auc_replace": 0.5,
+     "line_fit_auc_swap": 0.5,
+     "line_fit_auc_swap-doc": 0.5,
+     "word_fit_auc": 0.5,
+     "line_fit_mean_right": 0.5
+    }
+   },
+   "austrian_newspapers": {
+    "lines": 469,
+    "gap_rate": 0.2608,
+    "gaps": 2876,
+    "fit": {
+     "rows": 469,
+     "line_fit_auc": 0.5,
+     "line_fit_auc_delete": 0.5,
+     "line_fit_auc_replace": 0.5,
+     "line_fit_auc_swap": 0.5,
+     "word_fit_auc": 0.5,
+     "line_fit_mean_right": 0.5
+    }
+   },
+   "bullinger": {
+    "lines": 476,
+    "gap_rate": 0.258,
+    "gaps": 3392,
+    "fit": {
+     "rows": 476,
+     "line_fit_auc": 0.5,
+     "line_fit_auc_delete": 0.5,
+     "line_fit_auc_replace": 0.5,
+     "line_fit_auc_swap": 0.5,
+     "line_fit_auc_swap-doc": 0.5,
+     "word_fit_auc": 0.5,
+     "line_fit_mean_right": 0.5
+    }
+   },
+   "humboldt": {
+    "lines": 466,
+    "gap_rate": 0.1732,
+    "gaps": 2621,
+    "fit": {
+     "rows": 466,
+     "line_fit_auc": 0.5,
+     "line_fit_auc_delete": 0.5,
+     "line_fit_auc_replace": 0.5,
+     "line_fit_auc_swap": 0.5,
+     "word_fit_auc": 0.5,
+     "line_fit_mean_right": 0.5
+    }
+   },
+   "klosterneuburg_cod48": {
+    "lines": 480,
+    "gap_rate": 0.0875,
+    "gaps": 2137,
+    "fit": {
+     "rows": 480,
+     "line_fit_auc": 0.5,
+     "line_fit_auc_delete": 0.5,
+     "line_fit_auc_replace": 0.5,
+     "line_fit_auc_swap": 0.5,
+     "word_fit_auc": 0.5,
+     "line_fit_mean_right": 0.5
+    }
+   },
+   "konzilsprotokolle": {
+    "lines": 477,
+    "gap_rate": 0.1625,
+    "gaps": 2646,
+    "fit": {
+     "rows": 477,
+     "line_fit_auc": 0.5,
+     "line_fit_auc_delete": 0.5,
+     "line_fit_auc_replace": 0.5,
+     "line_fit_auc_swap": 0.5,
+     "word_fit_auc": 0.5,
+     "line_fit_mean_right": 0.5
+    }
+   },
+   "parzival": {
+    "lines": 480,
+    "gap_rate": 0.0987,
+    "gaps": 1955,
+    "fit": {
+     "rows": 480,
+     "line_fit_auc": 0.5,
+     "line_fit_auc_delete": 0.5,
+     "line_fit_auc_replace": 0.5,
+     "line_fit_auc_swap": 0.5,
+     "word_fit_auc": 0.5,
+     "line_fit_mean_right": 0.5
+    }
+   },
+   "swiss_council": {
+    "lines": 474,
+    "gap_rate": 0.2392,
+    "gaps": 2713,
+    "fit": {
+     "rows": 474,
+     "line_fit_auc": 0.5,
+     "line_fit_auc_delete": 0.5,
+     "line_fit_auc_replace": 0.5,
+     "line_fit_auc_swap-doc": 0.5,
+     "word_fit_auc": 0.5,
+     "line_fit_mean_right": 0.5
+    }
+   }
+  },
+  "placer": "even",
+  "set": "mismatch-heldout",
+  "shards": 10
+ },
+ "even|synth-heldfonts": {
+  "errors": 0,
+  "lines": 2000,
+  "word": {
+   "n": 26572,
+   "mean": 0.5097,
+   "median": 0.3673,
+   "p90": 1.1855,
+   "within_0.25": 0.3932,
+   "within_0.5": 0.5998,
+   "words": 13286,
+   "iou": 0.7729,
+   "both_ends_within_0.5": 0.419,
+   "q_auc": 0.5,
+   "q_ece": 0.081,
+   "q_mean": 0.5
+  },
+  "letter": {
+   "n": 57870,
+   "mean": 0.5618,
+   "median": 0.4361,
+   "p90": 1.2038,
+   "within_0.25": 0.3147,
+   "within_0.5": 0.557,
+   "q_auc": 0.5,
+   "q_ece": 0.057
+  },
+  "char": {
+   "n": 71156,
+   "both_cuts_within_0.25": 0.22,
+   "q_auc": 0.5,
+   "q_ece": 0.28,
+   "q_mean": 0.5
+  },
+  "gap_rate": 0.4506,
+  "gaps": 11286,
+  "placer": "even",
+  "set": "synth-heldfonts",
+  "shards": 5
+ },
+ "kraken-k2|gw20-words": {
+  "errors": 0,
+  "lines": 657,
+  "word": {
+   "n": 9720,
+   "mean": 0.3646,
+   "median": 0.2865,
+   "p90": 0.6736,
+   "within_0.25": 0.4343,
+   "within_0.5": 0.7857,
+   "words": 4860,
+   "iou": 0.8049,
+   "both_ends_within_0.5": 0.6253,
+   "q_auc": 0.5078,
+   "q_ece": 0.5186
+  },
+  "gap_rate": 0.9253,
+  "gaps": 4203,
+  "placer": "kraken-k2",
+  "set": "gw20-words",
+  "shards": 2
+ },
+ "kraken-k2|iam-words": {
+  "errors": 0,
+  "lines": 999,
+  "word": {
+   "n": 15572,
+   "mean": 0.576,
+   "median": 0.0303,
+   "p90": 1.9636,
+   "within_0.25": 0.7269,
+   "within_0.5": 0.7941,
+   "words": 7786,
+   "iou": 0.8098,
+   "both_ends_within_0.5": 0.7156,
+   "q_auc": 0.6113,
+   "q_ece": 0.6756
+  },
+  "gap_rate": 0.9713,
+  "gaps": 6787,
+  "placer": "kraken-k2",
+  "set": "iam-words",
+  "shards": 3
+ },
+ "kraken-k2|mismatch-heldout": {
+  "errors": 0,
+  "lines": 3785,
+  "gap_rate": 0.6601,
+  "gaps": 20106,
+  "fit": {
+   "rows": 3785,
+   "line_fit_auc": 0.7738,
+   "line_fit_auc_delete": 0.6551,
+   "line_fit_auc_replace": 0.6876,
+   "line_fit_auc_swap": 0.9718,
+   "line_fit_auc_swap-doc": 0.9767,
+   "word_fit_auc": 0.8439,
+   "line_fit_mean_right": 0.2404
+  },
+  "by_source": {
+   "abp": {
+    "lines": 463,
+    "gap_rate": 0.4275,
+    "gaps": 1766,
+    "fit": {
+     "rows": 463,
+     "line_fit_auc": 0.7789,
+     "line_fit_auc_delete": 0.6583,
+     "line_fit_auc_replace": 0.713,
+     "line_fit_auc_swap": 0.9451,
+     "line_fit_auc_swap-doc": 0.9955,
+     "word_fit_auc": 0.7849,
+     "line_fit_mean_right": 0.1522
+    }
+   },
+   "austrian_newspapers": {
+    "lines": 469,
+    "gap_rate": 0.8168,
+    "gaps": 2876,
+    "fit": {
+     "rows": 469,
+     "line_fit_auc": 0.7766,
+     "line_fit_auc_delete": 0.6448,
+     "line_fit_auc_replace": 0.6877,
+     "line_fit_auc_swap": 0.9856,
+     "word_fit_auc": 0.8986,
+     "line_fit_mean_right": 0.3308
+    }
+   },
+   "bullinger": {
+    "lines": 476,
+    "gap_rate": 0.8272,
+    "gaps": 3392,
+    "fit": {
+     "rows": 476,
+     "line_fit_auc": 0.7145,
+     "line_fit_auc_delete": 0.5866,
+     "line_fit_auc_replace": 0.613,
+     "line_fit_auc_swap": 0.941,
+     "line_fit_auc_swap-doc": 0.9276,
+     "word_fit_auc": 0.7374,
+     "line_fit_mean_right": 0.1181
+    }
+   },
+   "humboldt": {
+    "lines": 466,
+    "gap_rate": 0.5181,
+    "gaps": 2621,
+    "fit": {
+     "rows": 466,
+     "line_fit_auc": 0.9143,
+     "line_fit_auc_delete": 0.8527,
+     "line_fit_auc_replace": 0.8882,
+     "line_fit_auc_swap": 0.9979,
+     "word_fit_auc": 0.9478,
+     "line_fit_mean_right": 0.6122
+    }
+   },
+   "klosterneuburg_cod48": {
+    "lines": 480,
+    "gap_rate": 0.6874,
+    "gaps": 2137,
+    "fit": {
+     "rows": 480,
+     "line_fit_auc": 0.7487,
+     "line_fit_auc_delete": 0.6467,
+     "line_fit_auc_replace": 0.66,
+     "line_fit_auc_swap": 0.9394,
+     "word_fit_auc": 0.8214,
+     "line_fit_mean_right": 0.1216
+    }
+   },
+   "konzilsprotokolle": {
+    "lines": 477,
+    "gap_rate": 0.6285,
+    "gaps": 2646,
+    "fit": {
+     "rows": 477,
+     "line_fit_auc": 0.8103,
+     "line_fit_auc_delete": 0.6954,
+     "line_fit_auc_replace": 0.7491,
+     "line_fit_auc_swap": 0.9835,
+     "word_fit_auc": 0.8837,
+     "line_fit_mean_right": 0.236
+    }
+   },
+   "parzival": {
+    "lines": 480,
+    "gap_rate": 0.5136,
+    "gaps": 1955,
+    "fit": {
+     "rows": 480,
+     "line_fit_auc": 0.8386,
+     "line_fit_auc_delete": 0.7635,
+     "line_fit_auc_replace": 0.7669,
+     "line_fit_auc_swap": 0.9853,
+     "word_fit_auc": 0.8609,
+     "line_fit_mean_right": 0.1908
+    }
+   },
+   "swiss_council": {
+    "lines": 474,
+    "gap_rate": 0.6882,
+    "gaps": 2713,
+    "fit": {
+     "rows": 474,
+     "line_fit_auc": 0.7637,
+     "line_fit_auc_delete": 0.6487,
+     "line_fit_auc_replace": 0.6585,
+     "line_fit_auc_swap-doc": 0.9781,
+     "word_fit_auc": 0.8182,
+     "line_fit_mean_right": 0.1615
+    }
+   }
+  },
+  "placer": "kraken-k2",
+  "set": "mismatch-heldout",
+  "shards": 10
+ },
+ "kraken-k2|synth-heldfonts": {
+  "errors": 0,
+  "lines": 2000,
+  "word": {
+   "n": 26572,
+   "mean": 0.1479,
+   "median": 0.0532,
+   "p90": 0.3392,
+   "within_0.25": 0.8667,
+   "within_0.5": 0.9329,
+   "words": 13286,
+   "iou": 0.9317,
+   "both_ends_within_0.5": 0.8862,
+   "q_auc": 0.5975,
+   "q_ece": 0.6853,
+   "q_mean": 0.2053
+  },
+  "letter": {
+   "n": 57870,
+   "mean": 0.2115,
+   "median": 0.1344,
+   "p90": 0.4446,
+   "within_0.25": 0.7491,
+   "within_0.5": 0.9176,
+   "q_auc": 0.702,
+   "q_ece": 0.5375
+  },
+  "char": {
+   "n": 71156,
+   "both_cuts_within_0.25": 0.6514,
+   "q_auc": 0.607,
+   "q_ece": 0.3317,
+   "q_mean": 0.5341
+  },
+  "gap_rate": 0.9584,
+  "gaps": 11286,
+  "placer": "kraken-k2",
+  "set": "synth-heldfonts",
+  "shards": 5
+ },
+ "kraken-mccatmus|gw20-words": {
+  "errors": 0,
+  "lines": 657,
+  "word": {
+   "n": 9720,
+   "mean": 0.3773,
+   "median": 0.2762,
+   "p90": 0.7926,
+   "within_0.25": 0.4564,
+   "within_0.5": 0.773,
+   "words": 4860,
+   "iou": 0.8045,
+   "both_ends_within_0.5": 0.6031,
+   "q_auc": 0.5173,
+   "q_ece": 0.4147
+  },
+  "gap_rate": 0.9405,
+  "gaps": 4203,
+  "placer": "kraken-mccatmus",
+  "set": "gw20-words",
+  "shards": 2
+ },
+ "kraken-mccatmus|iam-words": {
+  "errors": 0,
+  "lines": 999,
+  "word": {
+   "n": 15572,
+   "mean": 0.0707,
+   "median": 0.0104,
+   "p90": 0.2255,
+   "within_0.25": 0.9097,
+   "within_0.5": 0.9701,
+   "words": 7786,
+   "iou": 0.9547,
+   "both_ends_within_0.5": 0.9418,
+   "q_auc": 0.6066,
+   "q_ece": 0.7038
+  },
+  "gap_rate": 0.9973,
+  "gaps": 6787,
+  "placer": "kraken-mccatmus",
+  "set": "iam-words",
+  "shards": 3
+ },
+ "kraken-mccatmus|mismatch-heldout": {
+  "errors": 0,
+  "lines": 3785,
+  "gap_rate": 0.7306,
+  "gaps": 20106,
+  "fit": {
+   "rows": 3785,
+   "line_fit_auc": 0.8159,
+   "line_fit_auc_delete": 0.7292,
+   "line_fit_auc_replace": 0.7226,
+   "line_fit_auc_swap": 0.9906,
+   "line_fit_auc_swap-doc": 0.9938,
+   "word_fit_auc": 0.8576,
+   "line_fit_mean_right": 0.1495
+  },
+  "by_source": {
+   "abp": {
+    "lines": 463,
+    "gap_rate": 0.487,
+    "gaps": 1766,
+    "fit": {
+     "rows": 463,
+     "line_fit_auc": 0.7874,
+     "line_fit_auc_delete": 0.6777,
+     "line_fit_auc_replace": 0.7139,
+     "line_fit_auc_swap": 0.9528,
+     "line_fit_auc_swap-doc": 0.9886,
+     "word_fit_auc": 0.7755,
+     "line_fit_mean_right": 0.0784
+    }
+   },
+   "austrian_newspapers": {
+    "lines": 469,
+    "gap_rate": 0.9315,
+    "gaps": 2876,
+    "fit": {
+     "rows": 469,
+     "line_fit_auc": 0.9151,
+     "line_fit_auc_delete": 0.8662,
+     "line_fit_auc_replace": 0.8746,
+     "line_fit_auc_swap": 1.0,
+     "word_fit_auc": 0.9666,
+     "line_fit_mean_right": 0.3087
+    }
+   },
+   "bullinger": {
+    "lines": 476,
+    "gap_rate": 0.8741,
+    "gaps": 3392,
+    "fit": {
+     "rows": 476,
+     "line_fit_auc": 0.7992,
+     "line_fit_auc_delete": 0.6987,
+     "line_fit_auc_replace": 0.7026,
+     "line_fit_auc_swap": 0.9926,
+     "line_fit_auc_swap-doc": 0.9968,
+     "word_fit_auc": 0.8696,
+     "line_fit_mean_right": 0.1065
+    }
+   },
+   "humboldt": {
+    "lines": 466,
+    "gap_rate": 0.6257,
+    "gaps": 2621,
+    "fit": {
+     "rows": 466,
+     "line_fit_auc": 0.7559,
+     "line_fit_auc_delete": 0.6482,
+     "line_fit_auc_replace": 0.6504,
+     "line_fit_auc_swap": 0.9591,
+     "word_fit_auc": 0.7284,
+     "line_fit_mean_right": 0.0727
+    }
+   },
+   "klosterneuburg_cod48": {
+    "lines": 480,
+    "gap_rate": 0.7375,
+    "gaps": 2137,
+    "fit": {
+     "rows": 480,
+     "line_fit_auc": 0.8743,
+     "line_fit_auc_delete": 0.8151,
+     "line_fit_auc_replace": 0.8087,
+     "line_fit_auc_swap": 0.9992,
+     "word_fit_auc": 0.9115,
+     "line_fit_mean_right": 0.1673
+    }
+   },
+   "konzilsprotokolle": {
+    "lines": 477,
+    "gap_rate": 0.6924,
+    "gaps": 2646,
+    "fit": {
+     "rows": 477,
+     "line_fit_auc": 0.7937,
+     "line_fit_auc_delete": 0.6993,
+     "line_fit_auc_replace": 0.6892,
+     "line_fit_auc_swap": 0.9901,
+     "word_fit_auc": 0.8151,
+     "line_fit_mean_right": 0.0624
+    }
+   },
+   "parzival": {
+    "lines": 480,
+    "gap_rate": 0.5703,
+    "gaps": 1955,
+    "fit": {
+     "rows": 480,
+     "line_fit_auc": 0.9295,
+     "line_fit_auc_delete": 0.8908,
+     "line_fit_auc_replace": 0.8978,
+     "line_fit_auc_swap": 1.0,
+     "word_fit_auc": 0.9389,
+     "line_fit_mean_right": 0.3092
+    }
+   },
+   "swiss_council": {
+    "lines": 474,
+    "gap_rate": 0.7453,
+    "gaps": 2713,
+    "fit": {
+     "rows": 474,
+     "line_fit_auc": 0.8365,
+     "line_fit_auc_delete": 0.7684,
+     "line_fit_auc_replace": 0.739,
+     "line_fit_auc_swap-doc": 0.9987,
+     "word_fit_auc": 0.858,
+     "line_fit_mean_right": 0.0909
+    }
+   }
+  },
+  "placer": "kraken-mccatmus",
+  "set": "mismatch-heldout",
+  "shards": 10
+ },
+ "kraken-mccatmus|synth-heldfonts": {
+  "errors": 0,
+  "lines": 2000,
+  "word": {
+   "n": 26572,
+   "mean": 0.136,
+   "median": 0.0298,
+   "p90": 0.4038,
+   "within_0.25": 0.8609,
+   "within_0.5": 0.9172,
+   "words": 13286,
+   "iou": 0.9375,
+   "both_ends_within_0.5": 0.8393,
+   "q_auc": 0.5782,
+   "q_ece": 0.4809,
+   "q_mean": 0.4202
+  },
+  "letter": {
+   "n": 57870,
+   "mean": 0.1986,
+   "median": 0.1361,
+   "p90": 0.4099,
+   "within_0.25": 0.7644,
+   "within_0.5": 0.9305,
+   "q_auc": 0.6597,
+   "q_ece": 0.3171
+  },
+  "char": {
+   "n": 71156,
+   "both_cuts_within_0.25": 0.6533,
+   "q_auc": 0.5776,
+   "q_ece": 0.3349,
+   "q_mean": 0.7578
+  },
+  "gap_rate": 0.9918,
+  "gaps": 11286,
+  "placer": "kraken-mccatmus",
+  "set": "synth-heldfonts",
+  "shards": 5
+ },
+ "even|letter-gold-candidates": {
+  "errors": 0,
+  "lines": 119,
+  "gap_rate": 0.173,
+  "gaps": 659,
+  "by_source": {
+   "aaeb": {
+    "lines": 12,
+    "gap_rate": 0.1695,
+    "gaps": 59
+   },
+   "abp": {
+    "lines": 12,
+    "gap_rate": 0.0,
+    "gaps": 51
+   },
+   "austrian_newspapers": {
+    "lines": 11,
+    "gap_rate": 0.2941,
+    "gaps": 68
+   },
+   "bullinger": {
+    "lines": 12,
+    "gap_rate": 0.3855,
+    "gaps": 83
+   },
+   "humboldt": {
+    "lines": 12,
+    "gap_rate": 0.0811,
+    "gaps": 74
+   },
+   "klosterneuburg_cod48": {
+    "lines": 12,
+    "gap_rate": 0.1818,
+    "gaps": 55
+   },
+   "konzilsprotokolle": {
+    "lines": 12,
+    "gap_rate": 0.0882,
+    "gaps": 68
+   },
+   "parzival": {
+    "lines": 12,
+    "gap_rate": 0.1273,
+    "gaps": 55
+   },
+   "swiss_council": {
+    "lines": 12,
+    "gap_rate": 0.1571,
+    "gaps": 70
+   },
+   "tridis": {
+    "lines": 12,
+    "gap_rate": 0.1579,
+    "gaps": 76
+   }
+  },
+  "placer": "even",
+  "set": "letter-gold-candidates",
+  "shards": 1
+ },
+ "kraken-k2|letter-gold-candidates": {
+  "errors": 0,
+  "lines": 131,
+  "gap_rate": 0.5592,
+  "gaps": 701,
+  "by_source": {
+   "aaeb": {
+    "lines": 12,
+    "gap_rate": 0.3898,
+    "gaps": 59
+   },
+   "abp": {
+    "lines": 12,
+    "gap_rate": 0.2157,
+    "gaps": 51
+   },
+   "austrian_newspapers": {
+    "lines": 11,
+    "gap_rate": 0.9559,
+    "gaps": 68
+   },
+   "bullinger": {
+    "lines": 12,
+    "gap_rate": 0.7831,
+    "gaps": 83
+   },
+   "humboldt": {
+    "lines": 12,
+    "gap_rate": 0.4865,
+    "gaps": 74
+   },
+   "klosterneuburg_cod48": {
+    "lines": 12,
+    "gap_rate": 0.4182,
+    "gaps": 55
+   },
+   "konzilsprotokolle": {
+    "lines": 12,
+    "gap_rate": 0.4412,
+    "gaps": 68
+   },
+   "laubmann": {
+    "lines": 12,
+    "gap_rate": 0.7143,
+    "gaps": 42
+   },
+   "parzival": {
+    "lines": 12,
+    "gap_rate": 0.4909,
+    "gaps": 55
+   },
+   "swiss_council": {
+    "lines": 12,
+    "gap_rate": 0.3286,
+    "gaps": 70
+   },
+   "tridis": {
+    "lines": 12,
+    "gap_rate": 0.7763,
+    "gaps": 76
+   }
+  },
+  "placer": "kraken-k2",
+  "set": "letter-gold-candidates",
+  "shards": 1
+ },
+ "kraken-mccatmus|letter-gold-candidates": {
+  "errors": 0,
+  "lines": 131,
+  "gap_rate": 0.6434,
+  "gaps": 701,
+  "by_source": {
+   "aaeb": {
+    "lines": 12,
+    "gap_rate": 0.5254,
+    "gaps": 59
+   },
+   "abp": {
+    "lines": 12,
+    "gap_rate": 0.2745,
+    "gaps": 51
+   },
+   "austrian_newspapers": {
+    "lines": 11,
+    "gap_rate": 0.9853,
+    "gaps": 68
+   },
+   "bullinger": {
+    "lines": 12,
+    "gap_rate": 0.9518,
+    "gaps": 83
+   },
+   "humboldt": {
+    "lines": 12,
+    "gap_rate": 0.5405,
+    "gaps": 74
+   },
+   "klosterneuburg_cod48": {
+    "lines": 12,
+    "gap_rate": 0.4727,
+    "gaps": 55
+   },
+   "konzilsprotokolle": {
+    "lines": 12,
+    "gap_rate": 0.5147,
+    "gaps": 68
+   },
+   "laubmann": {
+    "lines": 12,
+    "gap_rate": 0.6905,
+    "gaps": 42
+   },
+   "parzival": {
+    "lines": 12,
+    "gap_rate": 0.5455,
+    "gaps": 55
+   },
+   "swiss_council": {
+    "lines": 12,
+    "gap_rate": 0.5714,
+    "gaps": 70
+   },
+   "tridis": {
+    "lines": 12,
+    "gap_rate": 0.7895,
+    "gaps": 76
+   }
+  },
+  "placer": "kraken-mccatmus",
+  "set": "letter-gold-candidates",
+  "shards": 1
+ }
+}

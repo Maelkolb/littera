@@ -1,0 +1,980 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#e7e8e4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15181b" media="(prefers-color-scheme: dark)">
+<title>Letter gold</title>
+<link rel="stylesheet" href="letters.css">
+<style>
+:root {
+  --board: #e7e8e4;
+  --sheet: #f2f3f0;
+  --ink: #1e2227;
+  --pencil: #5d636b;
+  --rule: #c6c9c3;
+  --open: #cfd2cc;
+  --cut: #00707a;
+  --active: #c40d2b;
+  --doubt: #a87400;
+  --serif: "Palatino Linotype", "Book Antiqua", Palatino, "Iowan Old Style", Georgia, serif;
+  --letters: "Junicode Letters", "Palatino Linotype", Georgia, serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --board: #15181b;
+    --sheet: #1c2024;
+    --ink: #e3e4e0;
+    --pencil: #9ba1a8;
+    --rule: #353a40;
+    --open: #3a4046;
+    --cut: #3dbec6;
+    --active: #ff5d70;
+    --doubt: #e2b341;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --board: #15181b;
+  --sheet: #1c2024;
+  --ink: #e3e4e0;
+  --pencil: #9ba1a8;
+  --rule: #353a40;
+  --open: #3a4046;
+  --cut: #3dbec6;
+  --active: #ff5d70;
+  --doubt: #e2b341;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--board);
+  color: var(--ink);
+  font: 16px/1.45 var(--serif);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+::selection { background: color-mix(in srgb, var(--cut) 28%, transparent); }
+:focus-visible { outline: 2px solid var(--cut); outline-offset: 2px; }
+button { font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
+h1, h2 { text-wrap: balance; }
+body.dragging { user-select: none; cursor: ew-resize; }
+kbd { font: inherit; font-size: 0.82em; color: var(--pencil); }
+
+.bar {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  padding: 14px 24px 10px;
+}
+.bar h1 { margin: 0; font-size: 1.05rem; font-weight: 600; letter-spacing: 0.01em; }
+.tally { margin: 0 0 0 auto; color: var(--pencil); }
+.tally strong { color: var(--ink); font-weight: 600; }
+.quiet {
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: transparent;
+  padding: 5px 12px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.quiet:hover { border-color: var(--pencil); }
+.export.pending { color: var(--cut); border-color: var(--cut); }
+.export.pending::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 8px 1px 0;
+  border-radius: 50%;
+  background: var(--cut);
+}
+
+.ticks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 0 24px 14px;
+  border-bottom: 1px solid var(--rule);
+}
+.tick {
+  width: 5px;
+  height: 14px;
+  padding: 0;
+  border: 0;
+  border-radius: 1px;
+  background: var(--open);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.tick:hover { outline: 1px solid var(--pencil); outline-offset: 1px; }
+.tick.started { background: color-mix(in srgb, var(--cut) 35%, var(--open)); }
+.tick.done { background: var(--cut); }
+.tick.mismatch { background: var(--active); }
+.tick.unsure { background: var(--doubt); }
+.tick.here { outline: 1.5px solid var(--ink); outline-offset: 1px; }
+.tick-gap { width: 8px; }
+
+main { padding: 16px 24px 32px; }
+.head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-bottom: 10px;
+}
+.head h2 { margin: 0; font-size: 1.15rem; font-weight: 600; }
+.head .page { color: var(--pencil); overflow-wrap: anywhere; }
+.head .where { margin-left: auto; color: var(--pencil); }
+.verdict-mark { font-style: italic; }
+.verdict-mark.done { color: var(--cut); }
+.verdict-mark.mismatch { color: var(--active); }
+.verdict-mark.unsure { color: var(--doubt); }
+
+.overview {
+  position: relative;
+  max-width: 100%;
+  margin-bottom: 10px;
+  cursor: pointer;
+  line-height: 0;
+}
+.overview img { width: 100%; height: 100%; opacity: 0.85; }
+.overview svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.overview .frame { fill: none; stroke: var(--ink); stroke-width: 1; }
+.overview .mark { stroke: var(--cut); stroke-width: 1; }
+.overview .mark.active { stroke: var(--active); stroke-width: 2; }
+
+.stage:focus-visible { outline: 1px solid var(--cut); outline-offset: 0; }
+.stage {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: var(--sheet);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule) transparent;
+  overscroll-behavior-x: contain;
+}
+.plate { position: relative; margin: 0 auto; }
+.plate img { display: block; user-select: none; -webkit-user-drag: none; }
+.plate svg { position: absolute; left: 0; top: 0; overflow: visible; touch-action: pan-x; }
+.centre { fill: none; stroke: var(--pencil); stroke-width: 1; stroke-dasharray: 2 5; opacity: 0.55; }
+.cut .stroke { stroke: var(--cut); stroke-width: 1.4; fill: none; }
+.cut .reach { stroke: var(--cut); stroke-width: 1; fill: none; opacity: 0.35; }
+.cut.active .reach { stroke: var(--active); opacity: 0.55; }
+.cut.skip .reach { stroke: var(--doubt); }
+.cut .dot { fill: var(--cut); }
+.cut .hit { stroke: transparent; stroke-width: 18; cursor: ew-resize; touch-action: none; }
+.cut.skip .stroke { stroke: var(--doubt); stroke-dasharray: 4 4; }
+.cut.skip .dot { fill: var(--doubt); }
+.cut.active .stroke { stroke: var(--active); stroke-width: 2.2; }
+.cut.active .dot { fill: var(--active); }
+.letters { position: absolute; left: 0; height: 40px; }
+.letter {
+  position: absolute;
+  top: 6px;
+  transform: translateX(-50%);
+  font-family: var(--letters);
+  line-height: 1;
+  white-space: pre;
+  color: var(--ink);
+  pointer-events: none;
+}
+.letter.near { color: var(--active); }
+
+.transcript {
+  margin: 14px 0 0;
+  font-family: var(--letters);
+  font-size: 1.2rem;
+  overflow-wrap: anywhere;
+}
+.transcript .no-ink { color: var(--pencil); opacity: 0.6; }
+.transcript .near { color: var(--active); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+
+.verdicts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.verdicts .quiet[aria-pressed="true"][data-status="done"] { border-color: var(--cut); color: var(--cut); }
+.verdicts .quiet[aria-pressed="true"][data-status="mismatch"] { border-color: var(--active); color: var(--active); }
+.verdicts .quiet[aria-pressed="true"][data-status="unsure"] { border-color: var(--doubt); color: var(--doubt); }
+.keys {
+  margin: 22px 0 0;
+  max-width: 1100px;
+  color: var(--pencil);
+  font-size: 0.86rem;
+  line-height: 1.9;
+}
+.keys span { margin-right: 18px; white-space: nowrap; }
+.keys kbd { color: var(--ink); margin-right: 4px; }
+.notice { min-height: 1.45em; margin: 0; padding: 0 24px; color: var(--pencil); font-size: 0.9rem; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+body.dropping .stage { outline: 2px dashed var(--cut); outline-offset: 4px; }
+
+@media (max-width: 640px) {
+  .bar { padding: 12px 16px 8px; gap: 12px; }
+  .ticks { padding: 0 16px 12px; }
+  main { padding: 12px 16px 24px; }
+  .notice { padding: 0 16px; }
+  .keys { display: none; }
+  .head .where { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <h1>Letter gold</h1>
+  <p class="tally" id="tally" aria-live="polite"></p>
+  <button class="quiet export" id="export" type="button">Export</button>
+</header>
+<nav class="ticks" id="ticks" aria-label="Lines"></nav>
+<p class="notice" id="notice" role="status" aria-live="polite"></p>
+<main>
+  <div class="head">
+    <h2 id="source" translate="no"></h2>
+    <span class="page" id="page" translate="no"></span>
+    <span class="verdict-mark" id="verdict-mark"></span>
+    <span class="where" id="where"></span>
+  </div>
+  <div class="overview" id="overview" aria-hidden="true" hidden>
+    <img id="overview-image" alt="">
+    <svg id="overview-marks" aria-hidden="true"></svg>
+  </div>
+  <div class="stage" id="stage" tabindex="0" aria-label="Line image with letter cuts" aria-describedby="active-cut">
+    <div class="plate" id="plate">
+      <img id="crop" alt="">
+      <svg id="cuts" aria-hidden="true"></svg>
+      <div class="letters" id="letters" aria-hidden="true" translate="no"></div>
+    </div>
+  </div>
+  <p class="visually-hidden" id="active-cut" aria-live="polite"></p>
+  <p class="transcript" id="transcript" lang="" translate="no"></p>
+  <div class="verdicts">
+    <button class="quiet" type="button" data-status="done">Done <kbd>Enter</kbd></button>
+    <button class="quiet" type="button" data-status="mismatch">Text does not match <kbd>M</kbd></button>
+    <button class="quiet" type="button" data-status="unsure">Cannot tell <kbd>C</kbd></button>
+  </div>
+  <p class="keys">
+    <span><kbd>← →</kbd>move the cut</span><span><kbd>Shift</kbd>by 5</span><span><kbd>Alt</kbd>with the rest of the word</span>
+    <span><kbd>Tab</kbd>next cut</span><span><kbd>Shift Tab</kbd>back</span><span><kbd>Click</kbd>put the cut there</span>
+    <span><kbd>X</kbd>cannot place this cut</span><span><kbd>[ ]</kbd>slant</span><span><kbd>Z</kbd>whole line</span>
+    <span><kbd>+ −</kbd>zoom</span><span><kbd>↑ ↓</kbd>line</span><span><kbd>Ctrl Z</kbd>undo</span><span><kbd>Ctrl S</kbd>export</span>
+  </p>
+</main>
+<script src="data.js"></script>
+<script>
+"use strict";
+
+if (!window.LETTER_GOLD) {
+  document.querySelector("main").textContent = "data.js is missing next to this page. Build the folder again with tools.mark.build.";
+  throw new Error("no data");
+}
+const DATA = window.LETTER_GOLD;
+const LINES = DATA.lines;
+const STORE = "littera.letter-gold." + DATA.set;
+const SCHEMA = "littera/letter-marks/1";
+const TARGET_XHEIGHT = 42;
+const OVERVIEW_HEIGHT = 52;
+const BAND = 40;
+const SVG = "http://www.w3.org/2000/svg";
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+const el = (id) => document.getElementById(id);
+const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+const round2 = (v) => Math.round(v * 100) / 100;
+const lines = (n) => `${n} line${n === 1 ? "" : "s"}`;
+
+let saved = loadStore();
+let current = initialLine();
+let active = 0;
+let whole = false;
+let dragging = null;
+let undoStack = [];
+let lastActivity = performance.now();
+let saveTimer = null;
+let noticeTimer = null;
+
+function loadStore() {
+  try {
+    const value = JSON.parse(localStorage.getItem(STORE) || "{}");
+    return { lines: value.lines || {}, current: value.current, factor: value.factor || 1, exported: value.exported || null, pending: value.pending || 0 };
+  } catch (error) {
+    return { lines: {}, current: 0, factor: 1, exported: null, pending: 0 };
+  }
+}
+
+function persist() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(writeStore, 250);
+}
+
+function writeStore() {
+  try {
+    localStorage.setItem(STORE, JSON.stringify({ lines: saved.lines, current, factor: saved.factor, exported: saved.exported, pending: saved.pending }));
+  } catch (error) {
+    say("The browser refused to save. Export now to keep your marks.");
+  }
+}
+
+function initialLine() {
+  const fromHash = Number(new URLSearchParams(location.hash.slice(1)).get("line"));
+  if (fromHash >= 1 && fromHash <= LINES.length) return fromHash - 1;
+  return clamp(Number(saved.current) || 0, 0, LINES.length - 1);
+}
+
+function stateOf(index) {
+  const line = LINES[index];
+  let state = saved.lines[line.uid];
+  if (!state || state.text !== line.text || state.xs.length !== line.cuts.length) {
+    state = { text: line.text, status: "open", xs: line.cuts.map((c) => c.x), skip: [], slant: line.slant, moved: 0, visited: [], seconds: 0, touched: false };
+    saved.lines[line.uid] = state;
+  }
+  return state;
+}
+
+function touch(state) {
+  state.touched = true;
+  saved.pending += 1;
+}
+
+function snapshot(kind) {
+  const state = stateOf(current);
+  const top = undoStack[undoStack.length - 1];
+  const now = performance.now();
+  if (kind === "nudge" && top && top.kind === "nudge" && top.line === current && top.cut === active && now - top.at < 1500) {
+    top.at = now;
+    return;
+  }
+  undoStack.push({ kind, line: current, cut: active, at: now, state: JSON.stringify(state) });
+  if (undoStack.length > 300) undoStack.shift();
+}
+
+function undo() {
+  const entry = undoStack.pop();
+  if (!entry) return;
+  if (entry.all) {
+    saved.lines = JSON.parse(entry.all);
+    writeStore();
+    showLine(entry.line, entry.cut);
+    say("Restore undone.");
+    return;
+  }
+  saved.lines[LINES[entry.line].uid] = JSON.parse(entry.state);
+  if (entry.line !== current) {
+    showLine(entry.line, entry.cut);
+  } else {
+    active = entry.cut;
+    renderCuts();
+  }
+  persist();
+  renderTally();
+}
+
+function activity() {
+  const now = performance.now();
+  const state = stateOf(current);
+  state.seconds = (state.seconds || 0) + Math.min(20, (now - lastActivity) / 1000);
+  lastActivity = now;
+}
+
+function centreY(line, x) {
+  const points = line.centre;
+  if (x <= points[0][0]) return points[0][1];
+  for (let k = 1; k < points.length; k++) {
+    if (x <= points[k][0]) {
+      const [x0, y0] = points[k - 1];
+      const [x1, y1] = points[k];
+      return y0 + ((x - x0) / Math.max(1e-6, x1 - x0)) * (y1 - y0);
+    }
+  }
+  return points[points.length - 1][1];
+}
+
+function cutGeometry(line, x, slant) {
+  const c = centreY(line, x);
+  const at = (y) => [x + slant * (c - y), y];
+  const core = Math.min(0.8 * line.xheight, 34 / z);
+  const reach = Math.min(Math.max(-line.band[0], line.band[1], 1.4 * line.xheight), 80 / z);
+  const top = clamp(c - reach, 0, line.height);
+  const bottom = clamp(c + reach, 0, line.height);
+  const coreTop = clamp(c - core, 0, line.height);
+  const coreBottom = clamp(c + core, 0, line.height);
+  return { c, top: at(top), bottom: at(bottom), coreTop: at(coreTop), coreBottom: at(coreBottom) };
+}
+
+function zoom(line) {
+  const stageWidth = el("stage").clientWidth;
+  const tallest = Math.max(140, window.innerHeight * 0.5);
+  if (whole) return Math.min(stageWidth / line.width, tallest / line.height);
+  const magnified = clamp(TARGET_XHEIGHT / Math.max(2, line.xheight), 1.5, 10) * saved.factor;
+  return Math.min(magnified, tallest / line.height);
+}
+
+function svgNode(name, attributes, parent) {
+  const node = document.createElementNS(SVG, name);
+  for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, value);
+  if (parent) parent.appendChild(node);
+  return node;
+}
+
+let z = 1;
+
+function showLine(index, cut = 0) {
+  current = clamp(index, 0, LINES.length - 1);
+  const line = LINES[current];
+  const state = stateOf(current);
+  active = clamp(cut, 0, Math.max(0, line.cuts.length - 1));
+  visit(state);
+  history.replaceState(null, "", "#line=" + (current + 1));
+  el("source").textContent = line.source;
+  el("page").textContent = line.page;
+  el("where").textContent = `${current + 1} of ${LINES.length}`;
+  el("transcript").lang = line.source === "laubmann" ? "de" : "";
+  el("crop").src = line.image;
+  el("overview-image").src = line.image;
+  el("stage").scrollLeft = 0;
+  layout();
+  renderTally();
+  writeStore();
+}
+
+function layout() {
+  const line = LINES[current];
+  z = zoom(line);
+  const width = Math.round(line.width * z);
+  const height = Math.round(line.height * z);
+  const plate = el("plate");
+  plate.style.width = width + "px";
+  plate.style.height = height + BAND + "px";
+  const crop = el("crop");
+  crop.width = width;
+  crop.height = height;
+  const cuts = el("cuts");
+  cuts.setAttribute("width", width);
+  cuts.setAttribute("height", height + BAND);
+  cuts.setAttribute("viewBox", `0 0 ${width} ${height + BAND}`);
+  el("letters").style.top = height + "px";
+  el("letters").style.width = width + "px";
+  const overview = el("overview");
+  overview.hidden = width <= el("stage").clientWidth + 1;
+  overview.style.width = Math.min(el("stage").clientWidth, (OVERVIEW_HEIGHT * line.width) / line.height) + "px";
+  overview.style.height = (overview.offsetWidth || Math.min(el("stage").clientWidth, (OVERVIEW_HEIGHT * line.width) / line.height)) * (line.height / line.width) + "px";
+  renderCuts();
+  reveal(false);
+}
+
+function renderCuts() {
+  const line = LINES[current];
+  const state = stateOf(current);
+  const height = line.height * z;
+  const cuts = el("cuts");
+  cuts.replaceChildren();
+  const centre = line.centre.map(([x, y]) => `${(x * z).toFixed(1)},${(y * z).toFixed(1)}`).join(" ");
+  svgNode("polyline", { class: "centre", points: centre, "vector-effect": "non-scaling-stroke" }, cuts);
+  const skip = new Set(state.skip);
+  line.cuts.forEach((cut, k) => {
+    const g = cutGeometry(line, state.xs[k], state.slant);
+    const group = svgNode("g", { class: `cut ${cut.kind}${k === active ? " active" : ""}${skip.has(k) ? " skip" : ""}`, "data-k": k }, null);
+    const point = ([x, y]) => `${(x * z).toFixed(1)},${(y * z).toFixed(1)}`;
+    const core = `M${point(g.coreTop)} L${point(g.coreBottom)} M${(state.xs[k] * z).toFixed(1)},${height} l0,${BAND - 6}`;
+    const foot = { start: 6, end: -6 }[cut.kind];
+    const feet = foot ? ` M${point(g.coreTop)} l${foot},0 M${point(g.coreBottom)} l${foot},0` : "";
+    svgNode("path", { class: "hit", d: `M${point(g.top)} L${point(g.bottom)}` }, group);
+    svgNode("path", { class: "reach", d: `M${point(g.top)} L${point(g.coreTop)} M${point(g.coreBottom)} L${point(g.bottom)}` }, group);
+    svgNode("path", { class: "stroke", d: core + feet }, group);
+    svgNode("circle", { class: "dot", cx: state.xs[k] * z, cy: g.c * z, r: k === active ? 3 : 2 }, group);
+    if (k === active) cuts.appendChild(group);
+    else cuts.insertBefore(group, cuts.children[1] || null);
+  });
+  renderLetters(line, state);
+  renderTranscript(line, state);
+  renderOverview(line, state);
+  renderVerdict(state);
+  announce(line);
+}
+
+function renderLetters(line, state) {
+  const box = el("letters");
+  box.replaceChildren();
+  for (const letter of line.letters) {
+    const left = state.xs[letter.l];
+    const right = state.xs[letter.r];
+    const span = Math.max(0, right - left) * z;
+    const node = document.createElement("span");
+    node.className = "letter" + (letter.l === active || letter.r === active ? " near" : "");
+    node.textContent = letter.g;
+    node.style.left = ((left + right) / 2) * z + "px";
+    node.style.fontSize = clamp(span * 1.15, 12, 22) + "px";
+    box.appendChild(node);
+  }
+}
+
+function renderTranscript(line, state) {
+  const near = new Set();
+  const cut = line.cuts[active];
+  if (cut) {
+    for (const letter of line.letters) if (letter.l === active || letter.r === active) near.add(letter.j);
+  }
+  const box = el("transcript");
+  box.replaceChildren();
+  let run = "";
+  let runClass = "";
+  const flush = () => {
+    if (!run) return;
+    if (runClass) {
+      const span = document.createElement("span");
+      span.className = runClass;
+      span.textContent = run;
+      box.appendChild(span);
+    } else {
+      box.appendChild(document.createTextNode(run));
+    }
+    run = "";
+  };
+  [...line.text].forEach((ch, j) => {
+    const kind = near.has(j) ? "near" : line.ink[j] ? "" : "no-ink";
+    if (kind !== runClass) {
+      flush();
+      runClass = kind;
+    }
+    run += ch;
+  });
+  flush();
+}
+
+function renderOverview(line, state) {
+  const svg = el("overview-marks");
+  if (el("overview").hidden) return;
+  svg.replaceChildren();
+  svg.setAttribute("viewBox", `0 0 ${line.width} ${line.height}`);
+  svg.setAttribute("preserveAspectRatio", "none");
+  state.xs.forEach((x, k) => {
+    svgNode("line", { class: "mark" + (k === active ? " active" : ""), x1: x, x2: x, y1: line.height * 0.15, y2: line.height * 0.85, "vector-effect": "non-scaling-stroke" }, svg);
+  });
+  svgNode("rect", { class: "frame", id: "frame", x: 0, y: 0.5, width: 0, height: line.height - 1, "vector-effect": "non-scaling-stroke" }, svg);
+  placeFrame();
+}
+
+function placeFrame() {
+  const frame = document.getElementById("frame");
+  if (!frame) return;
+  const stage = el("stage");
+  const plateLeft = el("plate").offsetLeft;
+  frame.setAttribute("x", Math.max(0, (stage.scrollLeft - plateLeft) / z));
+  frame.setAttribute("width", stage.clientWidth / z);
+}
+
+function renderVerdict(state) {
+  const names = { done: "Done", mismatch: "Text does not match", unsure: "Cannot tell" };
+  const mark = el("verdict-mark");
+  mark.textContent = names[state.status] || "";
+  mark.className = "verdict-mark " + state.status;
+  document.querySelectorAll(".verdicts [data-status]").forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.status === state.status));
+  });
+}
+
+function announce(line) {
+  const cut = line.cuts[active];
+  if (!cut) {
+    el("active-cut").textContent = "This line has no cuts.";
+    return;
+  }
+  const before = cut.kind === "start" ? "word start" : line.text[cut.i - 1] || "";
+  const after = cut.kind === "end" ? "word end" : line.text[cut.i] || "";
+  el("active-cut").textContent = `Cut ${active + 1} of ${line.cuts.length}, between ${before} and ${after}`;
+}
+
+function reveal(smooth = true) {
+  const line = LINES[current];
+  const state = stateOf(current);
+  if (!line.cuts.length) return;
+  const stage = el("stage");
+  const x = state.xs[active] * z + el("plate").offsetLeft;
+  const left = stage.scrollLeft;
+  const width = stage.clientWidth;
+  if (x < left + width * 0.2 || x > left + width * 0.8) {
+    stage.scrollTo({ left: Math.max(0, x - width * 0.4), behavior: smooth && !reducedMotion.matches ? "smooth" : "auto" });
+  }
+  placeFrame();
+}
+
+function visit(state) {
+  if (!state.visited.includes(active)) state.visited.push(active);
+}
+
+function setActive(k) {
+  const line = LINES[current];
+  if (!line.cuts.length) return;
+  active = clamp(k, 0, line.cuts.length - 1);
+  visit(stateOf(current));
+  renderCuts();
+  reveal();
+  persist();
+}
+
+function moveCut(k, x, withWord = false) {
+  const line = LINES[current];
+  const state = stateOf(current);
+  const xs = state.xs;
+  const target = clamp(x, 0, line.width);
+  const shift = target - xs[k];
+  if (shift === 0) return;
+  if (withWord) {
+    for (let j = k; j < xs.length && line.cuts[j].w === line.cuts[k].w; j++) xs[j] = clamp(xs[j] + shift, 0, line.width);
+  } else {
+    xs[k] = target;
+  }
+  for (let j = k + 1; j < xs.length; j++) if (xs[j] < xs[j - 1]) xs[j] = xs[j - 1];
+  for (let j = k - 1; j >= 0; j--) if (xs[j] > xs[j + 1]) xs[j] = xs[j + 1];
+  state.moved = (state.moved || 0) + 1;
+  touch(state);
+  renderCuts();
+  persist();
+  renderExport();
+}
+
+function setStatus(status) {
+  const state = stateOf(current);
+  snapshot("status");
+  state.status = state.status === status && status !== "done" ? "open" : status;
+  touch(state);
+  writeStore();
+  renderTally();
+  renderExport();
+  if (state.status !== "open") nextOpenLine();
+  else renderCuts();
+}
+
+function nextOpenLine() {
+  for (let step = 1; step <= LINES.length; step++) {
+    const index = (current + step) % LINES.length;
+    const state = saved.lines[LINES[index].uid];
+    if (!state || state.status === "open") {
+      showLine(index);
+      return;
+    }
+  }
+  renderCuts();
+  say("Every line has a verdict. Export to keep the marks.");
+}
+
+function renderTally() {
+  let done = 0;
+  const box = el("ticks");
+  if (!box.children.length) buildTicks();
+  const ticks = box.querySelectorAll(".tick");
+  LINES.forEach((line, index) => {
+    const state = saved.lines[line.uid];
+    const status = state ? state.status : "open";
+    if (status === "done") done += 1;
+    const tick = ticks[index];
+    const started = state && status === "open" && state.touched;
+    tick.className = "tick" + (status !== "open" ? " " + status : started ? " started" : "") + (index === current ? " here" : "");
+  });
+  const others = LINES.filter((line) => saved.lines[line.uid] && ["mismatch", "unsure"].includes(saved.lines[line.uid].status)).length;
+  el("tally").innerHTML = `<strong>${done}</strong> of ${LINES.length} done` + (others ? `, ${others} set aside` : "");
+}
+
+function buildTicks() {
+  const box = el("ticks");
+  let source = null;
+  LINES.forEach((line, index) => {
+    if (source !== null && line.source !== source) {
+      const gap = document.createElement("span");
+      gap.className = "tick-gap";
+      box.appendChild(gap);
+    }
+    source = line.source;
+    const tick = document.createElement("button");
+    tick.className = "tick";
+    tick.type = "button";
+    tick.tabIndex = -1;
+    tick.dataset.index = index;
+    tick.title = `${index + 1}  ${line.source}  ${line.page}`;
+    tick.setAttribute("aria-label", `Line ${index + 1}, ${line.source}`);
+    tick.addEventListener("click", () => {
+      showLine(index);
+      backToStage();
+    });
+    box.appendChild(tick);
+  });
+}
+
+function renderExport() {
+  const button = el("export");
+  button.classList.toggle("pending", saved.pending > 0);
+  const when = saved.exported ? new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(saved.exported)) : "";
+  button.title = saved.pending > 0 ? "Changes since the last export" : when ? "Last exported " + when : "";
+}
+
+function say(text) {
+  clearTimeout(noticeTimer);
+  el("notice").textContent = text;
+  noticeTimer = setTimeout(() => (el("notice").textContent = ""), 6000);
+}
+
+function goldCuts(line, state) {
+  const skip = new Set(state.skip);
+  const out = [];
+  line.cuts.forEach((cut, k) => {
+    if (skip.has(k)) return;
+    for (const i of cut.idx) out.push({ i, x: round2(state.xs[k]) });
+  });
+  return out;
+}
+
+function exportMarks() {
+  const marked = [];
+  LINES.forEach((line, index) => {
+    const state = saved.lines[line.uid];
+    if (!state || (!state.touched && state.status === "open")) return;
+    marked.push({
+      uid: line.uid,
+      source: line.source,
+      text: line.text,
+      status: state.status,
+      slant: Math.round(state.slant * 10000) / 10000,
+      prefill: line.prefill,
+      moved: state.moved || 0,
+      visited: state.visited.length,
+      cuts_total: line.cuts.length,
+      seconds: Math.round(state.seconds || 0),
+      cuts: line.cuts.map((cut, k) => ({ i: cut.i, kind: cut.kind, x: round2(state.xs[k]), skip: state.skip.includes(k) })),
+      gold_cuts: state.status === "done" ? goldCuts(line, state) : [],
+      skipped: state.skip.map((k) => line.cuts[k].i),
+    });
+  });
+  const stamp = new Date();
+  const body = { schema: SCHEMA, set: DATA.set, placer: DATA.placer, built: DATA.built, exported: stamp.toISOString(), lines: marked };
+  const blob = new Blob([JSON.stringify(body, null, 1)], { type: "application/json" });
+  const link = document.createElement("a");
+  const pad = (n) => String(n).padStart(2, "0");
+  link.download = `letter-gold-${stamp.getFullYear()}-${pad(stamp.getMonth() + 1)}-${pad(stamp.getDate())}-${pad(stamp.getHours())}${pad(stamp.getMinutes())}.json`;
+  link.href = URL.createObjectURL(blob);
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(link.href), 2000);
+  saved.exported = stamp.toISOString();
+  saved.pending = 0;
+  writeStore();
+  renderExport();
+  say(`Exported ${lines(body.lines.length)} to ${link.download}`);
+}
+
+function restore(text, name) {
+  let body;
+  try {
+    body = JSON.parse(text);
+  } catch (error) {
+    say(`${name} is not a JSON file. Drop a file saved with Export.`);
+    return;
+  }
+  if (body.schema !== SCHEMA || body.set !== DATA.set) {
+    say(`${name} is not an export of this page. Drop a file saved with Export.`);
+    return;
+  }
+  const byUid = new Map(LINES.map((line) => [line.uid, line]));
+  undoStack.push({ kind: "restore", line: current, cut: active, at: performance.now(), all: JSON.stringify(saved.lines) });
+  let restored = 0;
+  for (const mark of body.lines || []) {
+    const line = byUid.get(mark.uid);
+    if (!line || line.text !== mark.text || mark.cuts.length !== line.cuts.length) continue;
+    saved.lines[line.uid] = {
+      text: line.text, status: mark.status, xs: mark.cuts.map((c) => c.x), skip: mark.cuts.map((c, k) => (c.skip ? k : -1)).filter((k) => k >= 0),
+      slant: mark.slant, moved: mark.moved || 0, visited: [...Array(mark.visited || 0).keys()], seconds: mark.seconds || 0, touched: true,
+    };
+    restored += 1;
+  }
+  writeStore();
+  showLine(current, active);
+  say(`Restored ${lines(restored)} from ${name}. Ctrl Z undoes it.`);
+}
+
+function cropPoint(event) {
+  const box = el("plate").getBoundingClientRect();
+  return { x: (event.clientX - box.left) / z, y: (event.clientY - box.top) / z };
+}
+
+function onPointerDown(event) {
+  if (event.button !== 0) return;
+  const group = event.target.closest(".cut");
+  activity();
+  if (group && event.target.classList.contains("hit")) {
+    const k = Number(group.dataset.k);
+    snapshot("drag");
+    active = k;
+    visit(stateOf(current));
+    dragging = { k, startX: event.clientX, from: stateOf(current).xs[k], withWord: event.altKey, pointer: event.pointerId };
+    el("cuts").setPointerCapture(event.pointerId);
+    document.body.classList.add("dragging");
+    renderCuts();
+    event.preventDefault();
+    return;
+  }
+  dragging = { place: true, startX: event.clientX, startY: event.clientY, pointer: event.pointerId };
+}
+
+function onPointerMove(event) {
+  if (!dragging || dragging.place || event.pointerId !== dragging.pointer) return;
+  moveCut(dragging.k, dragging.from + (event.clientX - dragging.startX) / z, dragging.withWord);
+}
+
+function onPointerUp(event) {
+  if (!dragging || event.pointerId !== dragging.pointer) return;
+  const drag = dragging;
+  dragging = null;
+  document.body.classList.remove("dragging");
+  if (!drag.place) {
+    reveal();
+    return;
+  }
+  if (Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY) > 5) return;
+  const line = LINES[current];
+  if (!line.cuts.length) return;
+  const point = cropPoint(event);
+  const state = stateOf(current);
+  const x = point.y > line.height ? point.x : point.x + state.slant * (point.y - centreY(line, point.x));
+  snapshot("place");
+  moveCut(active, x);
+  setActive(active + 1);
+}
+
+function onKey(event) {
+  const onButton = event.target instanceof Element && event.target.closest("button");
+  if (onButton && ["Enter", " ", "Tab"].includes(event.key)) return;
+  if (event.key === "Escape") {
+    el("export").focus();
+    return;
+  }
+  const line = LINES[current];
+  const state = stateOf(current);
+  const command = event.ctrlKey || event.metaKey;
+  const key = event.key;
+  activity();
+  if (command && key.toLowerCase() === "z") { undo(); event.preventDefault(); return; }
+  if (command && key.toLowerCase() === "s") { exportMarks(); event.preventDefault(); return; }
+  if (command) return;
+  if (key === "ArrowRight" || key === "ArrowLeft") {
+    if (!line.cuts.length) return;
+    snapshot("nudge");
+    const step = (event.shiftKey ? 5 : 1) * (key === "ArrowRight" ? 1 : -1);
+    moveCut(active, state.xs[active] + step, event.altKey);
+    reveal();
+  } else if (key === "Tab" || key === " ") {
+    setActive(active + (event.shiftKey ? -1 : 1));
+  } else if (key === "Home") {
+    setActive(0);
+  } else if (key === "End") {
+    setActive(line.cuts.length - 1);
+  } else if (key === "Enter") {
+    setStatus("done");
+  } else if (key === "m" || key === "M") {
+    setStatus("mismatch");
+  } else if (key === "c" || key === "C") {
+    setStatus("unsure");
+  } else if (key === "x" || key === "X" || key === "Delete" || key === "Backspace") {
+    if (!line.cuts.length) return;
+    snapshot("skip");
+    state.skip = state.skip.includes(active) ? state.skip.filter((k) => k !== active) : [...state.skip, active];
+    touch(state);
+    renderCuts();
+    persist();
+    renderExport();
+  } else if (key === "[" || key === "]") {
+    snapshot("slant");
+    state.slant = Math.round((state.slant + (key === "]" ? 0.02 : -0.02)) * 1000) / 1000;
+    touch(state);
+    renderCuts();
+    persist();
+    renderExport();
+  } else if (key === "ArrowDown" || key === "PageDown") {
+    showLine(current + 1);
+  } else if (key === "ArrowUp" || key === "PageUp") {
+    showLine(current - 1);
+  } else if (key === "z" || key === "Z") {
+    whole = !whole;
+    layout();
+  } else if (key === "+" || key === "=") {
+    saved.factor = clamp(saved.factor * 1.25, 0.3, 4);
+    whole = false;
+    layout();
+    persist();
+  } else if (key === "-" || key === "_") {
+    saved.factor = clamp(saved.factor / 1.25, 0.3, 4);
+    whole = false;
+    layout();
+    persist();
+  } else {
+    return;
+  }
+  event.preventDefault();
+}
+
+function backToStage() {
+  el("stage").focus({ preventScroll: true });
+}
+
+function onOverview(event) {
+  const line = LINES[current];
+  const box = el("overview").getBoundingClientRect();
+  const x = ((event.clientX - box.left) / box.width) * line.width;
+  const state = stateOf(current);
+  let best = 0;
+  state.xs.forEach((value, k) => {
+    if (Math.abs(value - x) < Math.abs(state.xs[best] - x)) best = k;
+  });
+  setActive(best);
+}
+
+document.addEventListener("keydown", onKey);
+el("cuts").addEventListener("pointerdown", onPointerDown);
+el("cuts").addEventListener("pointermove", onPointerMove);
+el("cuts").addEventListener("pointerup", onPointerUp);
+el("cuts").addEventListener("pointercancel", () => {
+  dragging = null;
+  document.body.classList.remove("dragging");
+});
+el("stage").addEventListener("scroll", placeFrame, { passive: true });
+el("overview").addEventListener("click", onOverview);
+el("export").addEventListener("click", () => {
+  exportMarks();
+  backToStage();
+});
+document.querySelectorAll(".verdicts [data-status]").forEach((button) => button.addEventListener("click", () => {
+  setStatus(button.dataset.status);
+  backToStage();
+}));
+window.addEventListener("resize", () => layout());
+window.addEventListener("hashchange", () => {
+  const index = Number(new URLSearchParams(location.hash.slice(1)).get("line")) - 1;
+  if (index >= 0 && index < LINES.length && index !== current) showLine(index);
+});
+window.addEventListener("pagehide", writeStore);
+document.addEventListener("visibilitychange", () => document.visibilityState === "hidden" && writeStore());
+document.addEventListener("dragover", (event) => {
+  event.preventDefault();
+  document.body.classList.add("dropping");
+});
+document.addEventListener("dragleave", (event) => {
+  if (!event.relatedTarget) document.body.classList.remove("dropping");
+});
+document.addEventListener("drop", (event) => {
+  event.preventDefault();
+  document.body.classList.remove("dropping");
+  const file = event.dataTransfer.files[0];
+  if (file) file.text().then((text) => restore(text, file.name));
+});
+
+showLine(current);
+renderExport();
+el("stage").focus({ preventScroll: true });
+</script>
+</body>
+</html>

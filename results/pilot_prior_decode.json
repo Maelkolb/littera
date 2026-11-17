@@ -1,0 +1,140 @@
+{
+ "pilot-prior@dps0.5|gw20-words": {
+  "errors": 0,
+  "lines": 657,
+  "word": {
+   "n": 9720,
+   "mean": 5.8623,
+   "median": 4.2692,
+   "p90": 13.851,
+   "within_0.25": 0.0831,
+   "within_0.5": 0.1537,
+   "words": 4860,
+   "iou": 0.1577,
+   "both_ends_within_0.5": 0.0364,
+   "q_auc": 0.4684,
+   "q_ece": 0.6232,
+   "q_mean": 0.6596
+  },
+  "gap_rate": 0.5691,
+  "gaps": 4203,
+  "placer": "littera:/vol/runs/pilot-prior@dps0.5",
+  "set": "gw20-words",
+  "shards": 2
+ },
+ "pilot-prior@dps0.5|synth-heldfonts": {
+  "errors": 0,
+  "lines": 2000,
+  "word": {
+   "n": 26572,
+   "mean": 3.0408,
+   "median": 1.2267,
+   "p90": 8.7639,
+   "within_0.25": 0.3678,
+   "within_0.5": 0.41,
+   "words": 13286,
+   "iou": 0.4604,
+   "both_ends_within_0.5": 0.2389,
+   "q_auc": 0.67,
+   "q_ece": 0.3161,
+   "q_mean": 0.555
+  },
+  "letter": {
+   "n": 57870,
+   "mean": 3.6105,
+   "median": 1.9165,
+   "p90": 9.5416,
+   "within_0.25": 0.1418,
+   "within_0.5": 0.24,
+   "q_auc": 0.6275,
+   "q_ece": 0.1963
+  },
+  "char": {
+   "n": 71156,
+   "both_cuts_within_0.25": 0.1036,
+   "q_auc": 0.6559,
+   "q_ece": 0.2917,
+   "q_mean": 0.3954
+  },
+  "gap_rate": 0.6823,
+  "gaps": 11286,
+  "placer": "littera:/vol/runs/pilot-prior@dps0.5",
+  "set": "synth-heldfonts",
+  "shards": 5
+ },
+ "pilot-prior@dps1.0|gw20-words": {
+  "errors": 0,
+  "lines": 657,
+  "word": {
+   "n": 9720,
+   "mean": 6.3533,
+   "median": 4.7838,
+   "p90": 14.6308,
+   "within_0.25": 0.069,
+   "within_0.5": 0.1274,
+   "words": 4860,
+   "iou": 0.1368,
+   "both_ends_within_0.5": 0.028,
+   "q_auc": 0.5094,
+   "q_ece": 0.6031,
+   "q_mean": 0.6311
+  },
+  "gap_rate": 0.5998,
+  "gaps": 4203,
+  "placer": "littera:/vol/runs/pilot-prior@dps1.0",
+  "set": "gw20-words",
+  "shards": 2
+ },
+ "pilot-prior@dps1.0|synth-heldfonts": {
+  "errors": 0,
+  "lines": 2000,
+  "word": {
+   "n": 26572,
+   "mean": 3.2806,
+   "median": 1.425,
+   "p90": 9.2869,
+   "within_0.25": 0.3328,
+   "within_0.5": 0.3804,
+   "words": 13286,
+   "iou": 0.4357,
+   "both_ends_within_0.5": 0.2098,
+   "q_auc": 0.6936,
+   "q_ece": 0.3595,
+   "q_mean": 0.5693
+  },
+  "letter": {
+   "n": 57870,
+   "mean": 3.8574,
+   "median": 2.1168,
+   "p90": 10.0468,
+   "within_0.25": 0.1153,
+   "within_0.5": 0.21,
+   "q_auc": 0.6333,
+   "q_ece": 0.2089
+  },
+  "char": {
+   "n": 71156,
+   "both_cuts_within_0.25": 0.0788,
+   "q_auc": 0.6631,
+   "q_ece": 0.3306,
+   "q_mean": 0.4094
+  },
+  "gap_rate": 0.6718,
+  "gaps": 11286,
+  "placer": "littera:/vol/runs/pilot-prior@dps1.0",
+  "set": "synth-heldfonts",
+  "shards": 5
+ },
+ "pilot-prior@dps0.5|test-read": {
+  "lines": 930,
+  "units": 31936,
+  "cer": 0.8865230460921844,
+  "read_rate": 0.11347695390781565
+ },
+ "pilot-prior@dps1.0|test-read": {
+  "lines": 930,
+  "units": 31936,
+  "cer": 0.9316132264529058,
+  "read_rate": 0.06838677354709422
+ }
+}

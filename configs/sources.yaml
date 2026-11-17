@@ -1,0 +1,319 @@
+# Line pool v1: licence decision and role per candidate source of the Kurrent VLM staged pool (volume kurrent-raw).
+# licence: the string recorded on the staged rows (kurrent-vlm docs/DATA_CARD_v1_5.md).
+# open_licence: true only for MIT, CC BY, CC BY-SA, CC0, Public Domain Mark; "per_row" decides each row by row_licences.
+# role: train (train, val, test splits), heldout (heldout split only), out (never in the pool).
+# baseline: false where the staged page baselines do not map onto the crop (checked on contact sheets).
+# markup: littera.text preset for the source's own markup (characters without ink), applied in training through the source column.
+open_licences: [MIT, CC BY, CC BY-SA, CC0, Public Domain Mark]
+
+sources:
+  aaeb:
+    licence: MIT
+    open_licence: true
+    role: train
+    markup: markup+apostrophe
+    reason: MIT; AAEB council protocols 1571-1670, French, Transkribus GT pages
+  basel_grundbuch:
+    licence: MIT
+    open_licence: true
+    role: train
+    markup: markup
+    reason: MIT; Basel Grundbuch index cards 1895-1977
+  bern_xix:
+    licence: MIT
+    open_licence: true
+    role: train
+    markup: markup
+    reason: MIT; DH Unibern 19th-century hands
+  catmus:
+    licence: CC BY 4.0
+    open_licence: true
+    role: train
+    markup: markup
+    reason: CC BY 4.0; CATMuS modern German lines
+  colmar_adhr:
+    licence: MIT
+    open_licence: true
+    role: train
+    markup: markup
+    reason: MIT; Colmar charters 1300-1500
+  emanuscripta:
+    licence: "CC BY-SA (transcriptions; credit the transcribers named on e-manuscripta.ch, CC0 where unnamed); images PDM 1.0"
+    open_licence: true
+    role: train
+    markup: markup+brackets
+    reason: transcriptions CC BY-SA or CC0, images Public Domain Mark; all readings open
+  enhg15:
+    licence: CC BY 4.0
+    open_licence: true
+    role: train
+    markup: markup
+    reason: CC BY 4.0; Early New High German 15th century
+  faithful_transcriptions:
+    licence: CC0 1.0
+    open_licence: true
+    role: train
+    markup: markup
+    reason: CC0 1.0; crowd transcriptions of 12 medieval manuscripts (high_silver)
+  fanny_mendelssohn:
+    licence: "CC BY 4.0 (Zenodo record); PAGE headers state CC0 1.0"
+    open_licence: true
+    role: train
+    markup: markup+brackets
+    reason: recorded conflict CC BY 4.0 / CC0 1.0, both open
+  fondue_wolfflin:
+    licence: CC BY 4.0
+    open_licence: true
+    role: train
+    markup: markup
+    reason: CC BY 4.0; archivists' annotations, Wölfflin photographs
+  grandtour:
+    licence: CC BY-SA 4.0
+    open_licence: true
+    role: train
+    markup: markup+brackets
+    reason: CC BY-SA 4.0; Grand Tour travel diaries
+  gt4histocr:
+    licence: CC BY 4.0
+    open_licence: true
+    role: train
+    markup: markup
+    reason: recorded conflict CC BY 4.0 (record) / CC BY-SA 4.0 (README), both open; Fraktur print
+  hanse_xv:
+    licence: MIT
+    open_licence: true
+    role: train
+    markup: markup
+    reason: MIT; Hanse Kurrent 15th century
+  hanse_xvi:
+    licence: MIT
+    open_licence: true
+    role: train
+    markup: markup
+    reason: MIT; Hanse Kurrent 16th century (abbreviations expanded by the transcribers)
+  hanse_xvii:
+    licence: MIT
+    open_licence: true
+    role: train
+    markup: markup
+    reason: MIT; Hanse Kurrent 17th century (abbreviations expanded by the transcribers)
+  hisclima:
+    licence: CC BY 4.0
+    open_licence: true
+    role: train
+    markup: markup+brackets
+    reason: CC BY 4.0; English ship logbooks, handwriting and printed form text
+  htr_school_2024:
+    licence: CC BY-SA 4.0
+    open_licence: true
+    role: train
+    markup: markup
+    reason: CC BY-SA 4.0; five ÖNB manuscripts 1397-1440
+  icfhr2018:
+    licence: CC BY 4.0
+    open_licence: true
+    role: train
+    markup: markup+brackets+bars
+    reason: CC BY 4.0; READ ICFHR 2018 competition
+  inzigkofen:
+    licence: CC BY 4.0
+    open_licence: true
+    role: train
+    markup: markup+bars
+    reason: CC BY 4.0; Inzigkofen manuscripts, textualis
+  lectaurep:
+    licence: "CC BY 4.0 (HTR-United lectaurep-mariages-et-divorces and lectaurep-repertoires: Archives nationales, Inria ALMAnaCH, EPHE; images as released in the repositories)"
+    open_licence: true
+    role: train
+    markup: markup
+    reason: CC BY 4.0; French notarial registers, handwriting and printed headers
+  mkn:
+    licence: Public Domain Mark 1.0
+    open_licence: true
+    role: train
+    markup: markup+brackets
+    reason: Public Domain Mark 1.0 recorded on every row; no conflicting statement found in the Kurrent records
+  nuremberg_letterbooks:
+    licence: CC BY 4.0
+    open_licence: true
+    role: train
+    markup: markup
+    reason: CC BY 4.0; basic transcription as written (* marks an abbreviation sign)
+  popp:
+    licence: CC BY 4.0
+    open_licence: true
+    role: train
+    markup: markup
+    reason: CC BY 4.0; POPP Paris census 1926
+  rats_richtebuecher:
+    licence: MIT
+    open_licence: true
+    role: train
+    markup: markup
+    reason: MIT; Zurich council and court books, corrected pages only
+  read_icfhr16:
+    licence: CC BY 4.0
+    open_licence: true
+    role: train
+    markup: markup
+    reason: CC BY 4.0; READ ICFHR 2016 (Ratsprotokolle)
+  scads:
+    licence: CC BY 4.0
+    open_licence: true
+    role: train
+    markup: markup+brackets
+    reason: CC BY 4.0
+  semper:
+    licence: "CC BY 4.0, CC BY-SA 4.0 (per row)"
+    open_licence: per_row
+    row_licences: {"CC BY 4.0": true, "CC BY-SA 4.0": true}
+    role: train
+    markup: markup+brackets
+    reason: per row CC BY 4.0 or CC BY-SA 4.0, both open
+  tridis:
+    licence: "MIT (dataset); originals CC BY"
+    open_licence: true
+    role: train
+    markup: markup+brackets+dollar+bars+braces+apostrophe
+    reason: MIT dataset, CC BY originals; medieval Latin and French
+  unibe_xx:
+    licence: MIT
+    open_licence: true
+    role: train
+    markup: markup
+    reason: MIT; DH Unibern 20th-century letters
+  zenodo19c:
+    licence: "CC BY 4.0, CC BY-NC-SA 4.0 (per row)"
+    open_licence: per_row
+    row_licences: {"CC BY 4.0": true, "CC BY-NC-SA 4.0": false}
+    role: train
+    markup: markup
+    reason: decided per row; the 106 Digitale Schriftkunde rows (CC BY-NC-SA 4.0) are out
+  zh_rrp:
+    licence: "MIT (hub); text CC BY-SA 4.0 at the source"
+    open_licence: true
+    role: train
+    markup: markup+brackets
+    reason: MIT on the hub, CC BY-SA 4.0 at the source, both open; edition text aligned to the images (high_silver)
+
+  humboldt:
+    licence: CC BY-SA 4.0
+    open_licence: true
+    role: heldout
+    markup: markup
+    reason: held-out source (all Humboldt variants; rows from staged/humboldt_tight as in the v1.5 build)
+  parzival:
+    licence: MIT
+    open_licence: true
+    role: heldout
+    markup: markup
+    reason: held-out source
+  konzilsprotokolle:
+    licence: CC BY 4.0
+    open_licence: true
+    role: heldout
+    markup: markup
+    reason: held-out source
+  bullinger:
+    licence: CC BY-SA 4.0
+    open_licence: true
+    role: heldout
+    markup: markup
+    reason: held-out source
+  swiss_council:
+    licence: CC BY 4.0
+    open_licence: true
+    role: heldout
+    markup: markup
+    reason: held-out source
+  klosterneuburg_cod48:
+    licence: CC BY 4.0
+    open_licence: true
+    role: heldout
+    markup: markup
+    reason: held-out source
+  austrian_newspapers:
+    licence: CC BY 4.0
+    open_licence: true
+    role: heldout
+    markup: markup
+    reason: held-out source (Fraktur print)
+  abp:
+    licence: "unpublished archival material (Archiv des Bistums Passau), internal research use"
+    open_licence: false
+    role: heldout
+    markup: markup
+    reason: internal archival material; evaluation only (owner wants it as an extra held-out source)
+
+  laubmann:
+    licence: "unpublished archival material (Nachlass Alfred Laubmann, Bayerisches Hauptstaatsarchiv), internal research use"
+    open_licence: false
+    role: out
+    reason: internal; wanted as held-out but the staged pool has no line rows for it (regions and pages only)
+  forst:
+    licence: "unpublished archival material (Regierung von Niederbayern, Kammer der Forsten; Staatsarchiv), internal research use"
+    open_licence: false
+    role: out
+    reason: internal archival material, not wanted for evaluation
+  reuss:
+    licence: "facsimile BSB NoC-NC; text CC BY 4.0"
+    open_licence: false
+    role: out
+    reason: facsimile non-commercial; no line rows
+  adv_forms:
+    licence: CC BY-NC-ND 4.0
+    open_licence: false
+    role: out
+    reason: NC and ND
+  dresden:
+    licence: CC BY-NC-SA 4.0
+    open_licence: false
+    role: out
+    reason: recorded conflict (API CC BY 4.0, description CC BY-NC-SA 4.0), the stricter reading is not open
+  stabs:
+    licence: CC BY-NC-SA 4.0
+    open_licence: false
+    role: out
+    reason: NC
+  nzz_newspapers:
+    licence: CC BY-NC 4.0
+    open_licence: false
+    role: out
+    reason: recorded conflict (repository CC BY-NC 4.0, Zenodo CC BY 4.0), the stricter reading is not open
+  finnish_migration:
+    licence: "annotations CC BY (TurkuNLP/htr-annotations); page images from the archives of the Finland's Family History Association (SSHY), Zenodo 15836012: property of the association, not to be redistributed, use for training computer vision models and distribution of trained models allowed"
+    open_licence: false
+    role: out
+    reason: page images may not be redistributed (unclear image rights)
+  leopold_letters:
+    licence: "CC BY-SA 4.0 (transcriptions); image rights with HHStA and OÖLA"
+    open_licence: false
+    role: out
+    reason: image rights with the archives, not openly licensed
+  hennig_diaries:
+    licence: "not stated (repository without licence; diaries of an author who died in 1977, OpenDigi open access within the legal limits)"
+    open_licence: false
+    role: out
+    reason: no licence stated
+  valais_census:
+    licence: "conflicting statements: CC0 1.0 (LICENSE file) / CC BY-NC 4.0 (htr-united.yml, CITATION.cff)"
+    open_licence: false
+    role: out
+    reason: recorded conflict, the stricter reading is not open
+  koenigsfelden:
+    licence: CC BY 4.0
+    open_licence: true
+    role: out
+    reason: open, but the v1.5 build drops every transcription row (graphemic edition text with editorial punctuation and normalised spellings, not as written)
+
+  reichsanzeiger: {licence: CC BY 4.0, open_licence: true, role: out, reason: no line transcription rows (print regions and layout only)}
+  chronicling_germany: {licence: CC BY-NC 4.0, open_licence: false, role: out, reason: NC; layout only}
+  cbad2019: {licence: CC BY 4.0, open_licence: true, role: out, reason: no line transcription rows (layout and line boxes only)}
+  read_abp_table: {licence: CC BY 4.0, open_licence: true, role: out, reason: no line transcription rows (tables)}
+  uos_logbooks: {licence: CC BY 4.0, open_licence: true, role: out, reason: no line transcription rows (tables)}
+  rainfall_rescue: {licence: Open Government Licence v3, open_licence: false, role: out, reason: no line rows (tables); OGL is not on the owner's list}
+  ctdar19_archival: {licence: CC BY 4.0, open_licence: true, role: out, reason: no line transcription rows (tables)}
+  sbb_tables: {licence: CC BY 4.0, open_licence: true, role: out, reason: no line transcription rows (tables)}
+  beeproject: {licence: see Kurrent records, open_licence: false, role: out, reason: excluded from the v1.5 build; tables only}
+  pipeline: {licence: mixed (crops of other sources), open_licence: false, role: out, reason: region crops of other sources, no line rows}
+  synth_layout: {licence: synthetic, open_licence: false, role: out, reason: synthetic layout pages, not real lines}
