@@ -126,7 +126,7 @@ def _column(table: pa.Table, name: str) -> list:
 
 class LineDataset(Dataset):
     def __init__(self, table: pa.Table, codec: Codec, config: TrainConfig, train: bool):
-        self.images = table.column("image").combine_chunks()
+        self.images = table.column("image").cast(pa.large_binary()).combine_chunks()
         self.texts = _column(table, "text")
         self.presets = [config.presets.get(source, config.preset) for source in _column(table, "source")]
         self.polygons = _column(table, "polygon")
