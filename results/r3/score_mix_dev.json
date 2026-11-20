@@ -1,0 +1,885 @@
+{
+ "refs": [
+  "k2-snap-mid",
+  "ft2-upright"
+ ],
+ "thresholds": {
+  "min_run_px": 2,
+  "tolerance_px": 1.5,
+  "near_px": 4.0,
+  "core_pad_xheights": 0.25,
+  "ink_sensitivity": 0.5,
+  "gap_level": "max(1, 2 % of the largest column count in the core band)"
+ },
+ "lines": 400,
+ "hand": {
+  "val": {
+   "lines": 200,
+   "inner_boundaries": 5418,
+   "runs": 2593,
+   "lifts": 1023,
+   "word_gaps": 1139,
+   "disputed": 287,
+   "word_boundaries": 1225,
+   "lift_rate": [
+    18.88,
+    17.13,
+    20.92,
+    5418
+   ],
+   "word_gap_runs_per_boundary": [
+    92.98,
+    88.07,
+    98.43,
+    1225
+   ],
+   "letters_in_connected_words": [
+    21.12,
+    18.99,
+    23.11,
+    6843
+   ]
+  },
+  "test_page": {
+   "lines": 200,
+   "inner_boundaries": 4909,
+   "runs": 2427,
+   "lifts": 1020,
+   "word_gaps": 1002,
+   "disputed": 261,
+   "word_boundaries": 1097,
+   "lift_rate": [
+    20.78,
+    18.98,
+    22.81,
+    4909
+   ],
+   "word_gap_runs_per_boundary": [
+    91.34,
+    86.36,
+    96.32,
+    1097
+   ],
+   "letters_in_connected_words": [
+    19.92,
+    17.53,
+    22.2,
+    6206
+   ]
+  },
+  "dev": {
+   "lines": 400,
+   "inner_boundaries": 10327,
+   "runs": 5020,
+   "lifts": 2043,
+   "word_gaps": 2141,
+   "disputed": 548,
+   "word_boundaries": 2322,
+   "lift_rate": [
+    19.78,
+    18.4,
+    21.08,
+    10327
+   ],
+   "word_gap_runs_per_boundary": [
+    92.2,
+    88.31,
+    96.48,
+    2322
+   ],
+   "letters_in_connected_words": [
+    20.55,
+    18.95,
+    22.14,
+    13049
+   ]
+  }
+ },
+ "placers": {
+  "k2-raw-mid": {
+   "val": {
+    "word_boundary": [
+     87.51,
+     84.79,
+     90.17,
+     1225
+    ],
+    "lift_cover": [
+     49.46,
+     45.88,
+     53.06,
+     1023
+    ],
+    "lift_near": [
+     64.22,
+     60.61,
+     67.55,
+     1023
+    ],
+    "lift_same_boundary_as_first_ref": [
+     95.42,
+     92.34,
+     98.0,
+     262
+    ],
+    "inner_edges_on_empty_column": [
+     10.76,
+     9.5,
+     12.1,
+     5418
+    ]
+   },
+   "test_page": {
+    "word_boundary": [
+     87.33,
+     84.51,
+     89.93,
+     1097
+    ],
+    "lift_cover": [
+     50.2,
+     46.97,
+     53.22,
+     1020
+    ],
+    "lift_near": [
+     64.12,
+     60.67,
+     67.15,
+     1020
+    ],
+    "lift_same_boundary_as_first_ref": [
+     96.84,
+     94.76,
+     98.67,
+     285
+    ],
+    "inner_edges_on_empty_column": [
+     11.0,
+     9.6,
+     12.4,
+     4909
+    ]
+   },
+   "dev": {
+    "word_boundary": [
+     87.42,
+     85.29,
+     89.3,
+     2322
+    ],
+    "lift_cover": [
+     49.83,
+     47.43,
+     51.9,
+     2043
+    ],
+    "lift_near": [
+     64.17,
+     61.55,
+     66.38,
+     2043
+    ],
+    "lift_same_boundary_as_first_ref": [
+     96.16,
+     94.35,
+     97.74,
+     547
+    ],
+    "inner_edges_on_empty_column": [
+     10.87,
+     9.95,
+     11.83,
+     10327
+    ]
+   }
+  },
+  "k2-snap-mid": {
+   "val": {
+    "word_boundary": [
+     92.0,
+     89.71,
+     94.16,
+     1225
+    ],
+    "lift_cover": [
+     35.68,
+     32.0,
+     38.95,
+     1023
+    ],
+    "lift_near": [
+     50.93,
+     47.06,
+     54.31,
+     1023
+    ],
+    "lift_same_boundary_as_first_ref": [
+     100.0,
+     100.0,
+     100.0,
+     365
+    ],
+    "inner_edges_on_empty_column": [
+     8.43,
+     7.21,
+     9.58,
+     5418
+    ]
+   },
+   "test_page": {
+    "word_boundary": [
+     92.8,
+     90.58,
+     95.01,
+     1097
+    ],
+    "lift_cover": [
+     38.82,
+     35.56,
+     42.13,
+     1020
+    ],
+    "lift_near": [
+     53.92,
+     50.91,
+     56.89,
+     1020
+    ],
+    "lift_same_boundary_as_first_ref": [
+     100.0,
+     100.0,
+     100.0,
+     396
+    ],
+    "inner_edges_on_empty_column": [
+     8.7,
+     7.49,
+     10.07,
+     4909
+    ]
+   },
+   "dev": {
+    "word_boundary": [
+     92.38,
+     90.63,
+     93.78,
+     2322
+    ],
+    "lift_cover": [
+     37.25,
+     34.77,
+     39.54,
+     2043
+    ],
+    "lift_near": [
+     52.42,
+     49.9,
+     54.71,
+     2043
+    ],
+    "lift_same_boundary_as_first_ref": [
+     100.0,
+     100.0,
+     100.0,
+     761
+    ],
+    "inner_edges_on_empty_column": [
+     8.56,
+     7.73,
+     9.43,
+     10327
+    ]
+   }
+  },
+  "mix:k2-raw-mid+k2-snap-mid": {
+   "val": {
+    "word_boundary": [
+     92.0,
+     89.71,
+     94.16,
+     1225
+    ],
+    "lift_cover": [
+     49.46,
+     45.88,
+     53.06,
+     1023
+    ],
+    "lift_near": [
+     64.22,
+     60.61,
+     67.55,
+     1023
+    ],
+    "lift_same_boundary_as_first_ref": [
+     95.42,
+     92.34,
+     98.0,
+     262
+    ],
+    "inner_edges_on_empty_column": [
+     10.76,
+     9.5,
+     12.1,
+     5418
+    ]
+   },
+   "test_page": {
+    "word_boundary": [
+     92.8,
+     90.58,
+     95.01,
+     1097
+    ],
+    "lift_cover": [
+     50.2,
+     46.97,
+     53.22,
+     1020
+    ],
+    "lift_near": [
+     64.12,
+     60.67,
+     67.15,
+     1020
+    ],
+    "lift_same_boundary_as_first_ref": [
+     96.84,
+     94.76,
+     98.67,
+     285
+    ],
+    "inner_edges_on_empty_column": [
+     11.0,
+     9.6,
+     12.4,
+     4909
+    ]
+   },
+   "dev": {
+    "word_boundary": [
+     92.38,
+     90.63,
+     93.78,
+     2322
+    ],
+    "lift_cover": [
+     49.83,
+     47.43,
+     51.9,
+     2043
+    ],
+    "lift_near": [
+     64.17,
+     61.55,
+     66.38,
+     2043
+    ],
+    "lift_same_boundary_as_first_ref": [
+     96.16,
+     94.35,
+     97.74,
+     547
+    ],
+    "inner_edges_on_empty_column": [
+     10.87,
+     9.95,
+     11.83,
+     10327
+    ]
+   }
+  },
+  "even@k2-snap-mid": {
+   "val": {
+    "word_boundary": [
+     92.0,
+     89.71,
+     94.16,
+     1225
+    ],
+    "lift_cover": [
+     39.0,
+     35.41,
+     42.57,
+     1023
+    ],
+    "lift_near": [
+     53.47,
+     49.79,
+     57.12,
+     1023
+    ],
+    "lift_same_boundary_as_first_ref": [
+     87.5,
+     82.91,
+     92.34,
+     224
+    ],
+    "inner_edges_on_empty_column": [
+     8.91,
+     7.75,
+     10.1,
+     5418
+    ]
+   },
+   "test_page": {
+    "word_boundary": [
+     92.8,
+     90.58,
+     95.01,
+     1097
+    ],
+    "lift_cover": [
+     41.27,
+     38.53,
+     43.99,
+     1020
+    ],
+    "lift_near": [
+     56.76,
+     53.69,
+     59.6,
+     1020
+    ],
+    "lift_same_boundary_as_first_ref": [
+     83.82,
+     78.51,
+     88.46,
+     241
+    ],
+    "inner_edges_on_empty_column": [
+     9.11,
+     7.8,
+     10.48,
+     4909
+    ]
+   },
+   "dev": {
+    "word_boundary": [
+     92.38,
+     90.63,
+     93.78,
+     2322
+    ],
+    "lift_cover": [
+     40.14,
+     37.83,
+     42.31,
+     2043
+    ],
+    "lift_near": [
+     55.12,
+     52.7,
+     57.54,
+     2043
+    ],
+    "lift_same_boundary_as_first_ref": [
+     85.59,
+     82.39,
+     88.91,
+     465
+    ],
+    "inner_edges_on_empty_column": [
+     9.01,
+     8.14,
+     9.88,
+     10327
+    ]
+   }
+  },
+  "ft2-off": {
+   "val": {
+    "word_boundary": [
+     85.47,
+     82.84,
+     88.0,
+     1225
+    ],
+    "lift_cover": [
+     47.9,
+     43.79,
+     51.91,
+     1023
+    ],
+    "lift_near": [
+     60.9,
+     57.07,
+     64.51,
+     1023
+    ],
+    "lift_same_boundary_as_first_ref": [
+     90.8,
+     86.73,
+     94.42,
+     261
+    ],
+    "inner_edges_on_empty_column": [
+     10.0,
+     8.5,
+     11.42,
+     5418
+    ]
+   },
+   "test_page": {
+    "word_boundary": [
+     86.78,
+     84.31,
+     89.3,
+     1097
+    ],
+    "lift_cover": [
+     49.22,
+     45.56,
+     52.42,
+     1020
+    ],
+    "lift_near": [
+     63.14,
+     59.82,
+     66.29,
+     1020
+    ],
+    "lift_same_boundary_as_first_ref": [
+     92.4,
+     89.04,
+     95.15,
+     263
+    ],
+    "inner_edges_on_empty_column": [
+     9.23,
+     7.97,
+     10.61,
+     4909
+    ]
+   },
+   "dev": {
+    "word_boundary": [
+     86.09,
+     84.17,
+     87.69,
+     2322
+    ],
+    "lift_cover": [
+     48.56,
+     45.76,
+     51.15,
+     2043
+    ],
+    "lift_near": [
+     62.02,
+     59.48,
+     64.59,
+     2043
+    ],
+    "lift_same_boundary_as_first_ref": [
+     91.6,
+     88.91,
+     93.97,
+     524
+    ],
+    "inner_edges_on_empty_column": [
+     9.63,
+     8.63,
+     10.64,
+     10327
+    ]
+   }
+  },
+  "ft2-upright": {
+   "val": {
+    "word_boundary": [
+     92.65,
+     90.5,
+     94.82,
+     1225
+    ],
+    "lift_cover": [
+     37.15,
+     33.6,
+     40.69,
+     1023
+    ],
+    "lift_near": [
+     51.42,
+     47.73,
+     55.37,
+     1023
+    ],
+    "lift_same_boundary_as_first_ref": [
+     90.99,
+     86.86,
+     94.61,
+     222
+    ],
+    "inner_edges_on_empty_column": [
+     8.23,
+     6.93,
+     9.42,
+     5418
+    ]
+   },
+   "test_page": {
+    "word_boundary": [
+     93.16,
+     91.16,
+     95.02,
+     1097
+    ],
+    "lift_cover": [
+     38.73,
+     35.82,
+     41.67,
+     1020
+    ],
+    "lift_near": [
+     55.0,
+     51.66,
+     58.16,
+     1020
+    ],
+    "lift_same_boundary_as_first_ref": [
+     90.99,
+     86.73,
+     94.5,
+     222
+    ],
+    "inner_edges_on_empty_column": [
+     7.74,
+     6.71,
+     8.95,
+     4909
+    ]
+   },
+   "dev": {
+    "word_boundary": [
+     92.89,
+     91.27,
+     94.43,
+     2322
+    ],
+    "lift_cover": [
+     37.93,
+     35.53,
+     40.31,
+     2043
+    ],
+    "lift_near": [
+     53.21,
+     50.66,
+     55.61,
+     2043
+    ],
+    "lift_same_boundary_as_first_ref": [
+     90.99,
+     88.14,
+     93.64,
+     444
+    ],
+    "inner_edges_on_empty_column": [
+     8.0,
+     7.17,
+     8.9,
+     10327
+    ]
+   }
+  },
+  "mix:ft2-off+ft2-upright": {
+   "val": {
+    "word_boundary": [
+     92.65,
+     90.5,
+     94.82,
+     1225
+    ],
+    "lift_cover": [
+     47.9,
+     43.79,
+     51.91,
+     1023
+    ],
+    "lift_near": [
+     60.9,
+     57.07,
+     64.51,
+     1023
+    ],
+    "lift_same_boundary_as_first_ref": [
+     90.8,
+     86.73,
+     94.42,
+     261
+    ],
+    "inner_edges_on_empty_column": [
+     10.0,
+     8.49,
+     11.41,
+     5418
+    ]
+   },
+   "test_page": {
+    "word_boundary": [
+     93.16,
+     91.16,
+     95.02,
+     1097
+    ],
+    "lift_cover": [
+     49.22,
+     45.56,
+     52.42,
+     1020
+    ],
+    "lift_near": [
+     63.14,
+     59.82,
+     66.29,
+     1020
+    ],
+    "lift_same_boundary_as_first_ref": [
+     92.4,
+     89.04,
+     95.15,
+     263
+    ],
+    "inner_edges_on_empty_column": [
+     9.23,
+     7.97,
+     10.61,
+     4909
+    ]
+   },
+   "dev": {
+    "word_boundary": [
+     92.89,
+     91.27,
+     94.43,
+     2322
+    ],
+    "lift_cover": [
+     48.56,
+     45.76,
+     51.15,
+     2043
+    ],
+    "lift_near": [
+     62.02,
+     59.48,
+     64.59,
+     2043
+    ],
+    "lift_same_boundary_as_first_ref": [
+     91.6,
+     88.91,
+     93.97,
+     524
+    ],
+    "inner_edges_on_empty_column": [
+     9.63,
+     8.64,
+     10.63,
+     10327
+    ]
+   }
+  },
+  "even@ft2-upright": {
+   "val": {
+    "word_boundary": [
+     92.65,
+     90.5,
+     94.82,
+     1225
+    ],
+    "lift_cover": [
+     35.97,
+     32.85,
+     39.07,
+     1023
+    ],
+    "lift_near": [
+     51.91,
+     48.56,
+     55.17,
+     1023
+    ],
+    "lift_same_boundary_as_first_ref": [
+     81.96,
+     76.33,
+     87.85,
+     194
+    ],
+    "inner_edges_on_empty_column": [
+     8.23,
+     6.95,
+     9.38,
+     5418
+    ]
+   },
+   "test_page": {
+    "word_boundary": [
+     93.16,
+     91.16,
+     95.02,
+     1097
+    ],
+    "lift_cover": [
+     38.04,
+     35.22,
+     40.93,
+     1020
+    ],
+    "lift_near": [
+     52.65,
+     49.51,
+     55.63,
+     1020
+    ],
+    "lift_same_boundary_as_first_ref": [
+     82.22,
+     77.05,
+     87.79,
+     225
+    ],
+    "inner_edges_on_empty_column": [
+     8.07,
+     6.92,
+     9.37,
+     4909
+    ]
+   },
+   "dev": {
+    "word_boundary": [
+     92.89,
+     91.27,
+     94.43,
+     2322
+    ],
+    "lift_cover": [
+     37.0,
+     34.75,
+     39.12,
+     2043
+    ],
+    "lift_near": [
+     52.28,
+     49.95,
+     54.79,
+     2043
+    ],
+    "lift_same_boundary_as_first_ref": [
+     82.1,
+     78.43,
+     86.0,
+     419
+    ],
+    "inner_edges_on_empty_column": [
+     8.15,
+     7.29,
+     9.14,
+     10327
+    ]
+   }
+  }
+ },
+ "crop_width_mismatches": {}
+}

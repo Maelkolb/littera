@@ -1,0 +1,493 @@
+{
+ "refs": [
+  "k2-snap-mid",
+  "ft2-upright"
+ ],
+ "thresholds": {
+  "min_run_px": 2,
+  "tolerance_px": 1.5,
+  "near_px": 4.0,
+  "core_pad_xheights": 0.25,
+  "ink_sensitivity": 0.5,
+  "gap_level": "max(1, 2 % of the largest column count in the core band)"
+ },
+ "lines": 400,
+ "hand": {
+  "val": {
+   "lines": 200,
+   "inner_boundaries": 5418,
+   "runs": 2593,
+   "lifts": 1023,
+   "word_gaps": 1139,
+   "disputed": 287,
+   "word_boundaries": 1225,
+   "lift_rate": [
+    18.88,
+    17.13,
+    20.92,
+    5418
+   ],
+   "word_gap_runs_per_boundary": [
+    92.98,
+    88.07,
+    98.43,
+    1225
+   ],
+   "letters_in_connected_words": [
+    21.12,
+    18.99,
+    23.11,
+    6843
+   ]
+  },
+  "test_page": {
+   "lines": 200,
+   "inner_boundaries": 4909,
+   "runs": 2427,
+   "lifts": 1020,
+   "word_gaps": 1002,
+   "disputed": 261,
+   "word_boundaries": 1097,
+   "lift_rate": [
+    20.78,
+    18.98,
+    22.81,
+    4909
+   ],
+   "word_gap_runs_per_boundary": [
+    91.34,
+    86.36,
+    96.32,
+    1097
+   ],
+   "letters_in_connected_words": [
+    19.92,
+    17.53,
+    22.2,
+    6206
+   ]
+  },
+  "dev": {
+   "lines": 400,
+   "inner_boundaries": 10327,
+   "runs": 5020,
+   "lifts": 2043,
+   "word_gaps": 2141,
+   "disputed": 548,
+   "word_boundaries": 2322,
+   "lift_rate": [
+    19.78,
+    18.4,
+    21.08,
+    10327
+   ],
+   "word_gap_runs_per_boundary": [
+    92.2,
+    88.31,
+    96.48,
+    2322
+   ],
+   "letters_in_connected_words": [
+    20.55,
+    18.95,
+    22.14,
+    13049
+   ]
+  }
+ },
+ "placers": {
+  "mix:k2-raw-mid+k2-snap-mid": {
+   "val": {
+    "word_boundary": [
+     92.0,
+     89.71,
+     94.16,
+     1225
+    ],
+    "lift_cover": [
+     49.46,
+     45.88,
+     53.06,
+     1023
+    ],
+    "lift_near": [
+     64.22,
+     60.61,
+     67.55,
+     1023
+    ],
+    "lift_same_boundary_as_first_ref": [
+     95.42,
+     92.34,
+     98.0,
+     262
+    ],
+    "inner_edges_on_empty_column": [
+     10.76,
+     9.5,
+     12.1,
+     5418
+    ]
+   },
+   "test_page": {
+    "word_boundary": [
+     92.8,
+     90.58,
+     95.01,
+     1097
+    ],
+    "lift_cover": [
+     50.2,
+     46.97,
+     53.22,
+     1020
+    ],
+    "lift_near": [
+     64.12,
+     60.67,
+     67.15,
+     1020
+    ],
+    "lift_same_boundary_as_first_ref": [
+     96.84,
+     94.76,
+     98.67,
+     285
+    ],
+    "inner_edges_on_empty_column": [
+     11.0,
+     9.6,
+     12.4,
+     4909
+    ]
+   },
+   "dev": {
+    "word_boundary": [
+     92.38,
+     90.63,
+     93.78,
+     2322
+    ],
+    "lift_cover": [
+     49.83,
+     47.43,
+     51.9,
+     2043
+    ],
+    "lift_near": [
+     64.17,
+     61.55,
+     66.38,
+     2043
+    ],
+    "lift_same_boundary_as_first_ref": [
+     96.16,
+     94.35,
+     97.74,
+     547
+    ],
+    "inner_edges_on_empty_column": [
+     10.87,
+     9.95,
+     11.83,
+     10327
+    ]
+   }
+  },
+  "t-ft2-keep2": {
+   "val": {
+    "word_boundary": [
+     92.65,
+     90.5,
+     94.82,
+     1225
+    ],
+    "lift_cover": [
+     48.0,
+     43.74,
+     52.11,
+     1023
+    ],
+    "lift_near": [
+     60.51,
+     56.56,
+     64.25,
+     1023
+    ],
+    "lift_same_boundary_as_first_ref": [
+     91.19,
+     86.84,
+     94.78,
+     261
+    ],
+    "inner_edges_on_empty_column": [
+     9.91,
+     8.38,
+     11.34,
+     5418
+    ]
+   },
+   "test_page": {
+    "word_boundary": [
+     93.16,
+     91.16,
+     95.02,
+     1097
+    ],
+    "lift_cover": [
+     48.92,
+     45.42,
+     52.17,
+     1020
+    ],
+    "lift_near": [
+     63.43,
+     60.21,
+     66.64,
+     1020
+    ],
+    "lift_same_boundary_as_first_ref": [
+     91.7,
+     88.1,
+     94.76,
+     265
+    ],
+    "inner_edges_on_empty_column": [
+     8.86,
+     7.68,
+     10.1,
+     4909
+    ]
+   },
+   "dev": {
+    "word_boundary": [
+     92.89,
+     91.27,
+     94.43,
+     2322
+    ],
+    "lift_cover": [
+     48.46,
+     45.71,
+     51.01,
+     2043
+    ],
+    "lift_near": [
+     61.97,
+     59.38,
+     64.44,
+     2043
+    ],
+    "lift_same_boundary_as_first_ref": [
+     91.44,
+     88.67,
+     93.91,
+     526
+    ],
+    "inner_edges_on_empty_column": [
+     9.41,
+     8.45,
+     10.35,
+     10327
+    ]
+   }
+  },
+  "f-local": {
+   "val": {
+    "word_boundary": [
+     90.29,
+     87.96,
+     92.62,
+     1225
+    ],
+    "lift_cover": [
+     55.72,
+     51.63,
+     59.66,
+     1023
+    ],
+    "lift_near": [
+     66.67,
+     63.01,
+     70.47,
+     1023
+    ],
+    "lift_same_boundary_as_first_ref": [
+     93.45,
+     90.0,
+     96.42,
+     275
+    ],
+    "inner_edges_on_empty_column": [
+     7.73,
+     6.6,
+     8.8,
+     5418
+    ]
+   },
+   "test_page": {
+    "word_boundary": [
+     91.52,
+     88.8,
+     93.9,
+     1097
+    ],
+    "lift_cover": [
+     56.86,
+     53.13,
+     60.17,
+     1020
+    ],
+    "lift_near": [
+     70.78,
+     67.5,
+     73.71,
+     1020
+    ],
+    "lift_same_boundary_as_first_ref": [
+     93.47,
+     90.4,
+     95.97,
+     291
+    ],
+    "inner_edges_on_empty_column": [
+     6.29,
+     5.36,
+     7.25,
+     4909
+    ]
+   },
+   "dev": {
+    "word_boundary": [
+     90.87,
+     88.91,
+     92.65,
+     2322
+    ],
+    "lift_cover": [
+     56.29,
+     53.46,
+     58.88,
+     2043
+    ],
+    "lift_near": [
+     68.72,
+     66.18,
+     71.12,
+     2043
+    ],
+    "lift_same_boundary_as_first_ref": [
+     93.46,
+     91.33,
+     95.51,
+     566
+    ],
+    "inner_edges_on_empty_column": [
+     7.05,
+     6.2,
+     7.81,
+     10327
+    ]
+   }
+  },
+  "f-local-off": {
+   "val": {
+    "word_boundary": [
+     90.12,
+     87.74,
+     92.51,
+     1225
+    ],
+    "lift_cover": [
+     39.0,
+     35.02,
+     42.9,
+     1023
+    ],
+    "lift_near": [
+     51.32,
+     46.92,
+     55.61,
+     1023
+    ],
+    "lift_same_boundary_as_first_ref": [
+     88.35,
+     83.96,
+     92.55,
+     206
+    ],
+    "inner_edges_on_empty_column": [
+     7.68,
+     6.49,
+     8.81,
+     5418
+    ]
+   },
+   "test_page": {
+    "word_boundary": [
+     91.52,
+     88.93,
+     93.87,
+     1097
+    ],
+    "lift_cover": [
+     36.67,
+     33.55,
+     39.96,
+     1020
+    ],
+    "lift_near": [
+     50.49,
+     47.25,
+     53.89,
+     1020
+    ],
+    "lift_same_boundary_as_first_ref": [
+     86.56,
+     80.81,
+     91.52,
+     186
+    ],
+    "inner_edges_on_empty_column": [
+     6.82,
+     5.88,
+     7.71,
+     4909
+    ]
+   },
+   "dev": {
+    "word_boundary": [
+     90.78,
+     88.88,
+     92.54,
+     2322
+    ],
+    "lift_cover": [
+     37.84,
+     35.29,
+     40.27,
+     2043
+    ],
+    "lift_near": [
+     50.91,
+     47.93,
+     53.51,
+     2043
+    ],
+    "lift_same_boundary_as_first_ref": [
+     87.5,
+     83.76,
+     90.91,
+     392
+    ],
+    "inner_edges_on_empty_column": [
+     7.27,
+     6.45,
+     7.98,
+     10327
+    ]
+   }
+  }
+ },
+ "crop_width_mismatches": {}
+}

@@ -20,7 +20,7 @@ import torch.nn.functional as F
 from PIL import Image, ImageFilter
 from torch.utils.data import DataLoader, Dataset, Sampler
 
-from littera import graph
+from littera import anchors, graph
 from littera.geometry import GeometryConfig, prepare
 from littera.graph import GraphOptions
 from littera.model import LineModel, ModelConfig, model_directory, parameter_count, save_model
@@ -82,6 +82,8 @@ class TrainConfig:
     save_every: float = 600.0
     prior_momentum: float = 0.999
     augment: dict = field(default_factory=dict)
+    anchors: str = ""
+    lift_cuts: bool = False
 
     @classmethod
     def from_dict(cls, d: dict) -> TrainConfig:
@@ -128,6 +130,7 @@ class LineDataset(Dataset):
     def __init__(self, table: pa.Table, codec: Codec, config: TrainConfig, train: bool):
         self.images = table.column("image").cast(pa.large_binary()).combine_chunks()
         self.texts = _column(table, "text")
+        self.anchors = anchors.for_rows(config.anchors, _column(table, "uid")) if config.anchors else None
         self.presets = [config.presets.get(source, config.preset) for source in _column(table, "source")]
         self.polygons = _column(table, "polygon")
         self.baselines = _column(table, "baseline")
@@ -153,23 +156,35 @@ class LineDataset(Dataset):
         polygon = self.polygons[i] or None
         baseline = self.baselines[i] or None
         cuts = [(c["i"], c["x"]) for c in self.cuts[i]] if self.cuts[i] else None
-        core_scale = 1.0
+        core_scale, shift = 1.0, 0.0
         if self.augment:
+            width_before = image.width
             image, polygon, baseline, cuts, core_scale = self._augment(image, polygon, baseline, cuts)
+            shift = (image.width - width_before) / 2
         strip = prepare(image, polygon, baseline, self.geometry, core_scale=core_scale)
         encoded = self.codec.encode(self.texts[i], self.presets[i])
         words = [[(self._mask(label), optional) for label, optional in word] for word in encoded.graph_words()]
         stride = self.geometry.stride
         frames = strip.width // stride
-        targets = frame_labels = None
+        targets = frame_labels = target_frames = None
+        flat = [label for word in words for label, _ in word]
         if cuts:
             positions = np.round(strip.strip_u([x for _, x in cuts]) / stride).astype(np.int64)
             targets = sorted({int(p) for p in positions if 0 <= p < frames})
             if self.options.segmental:
                 frame_labels = self._frame_labels(encoded, words, dict(cuts), strip, frames)
-        return {"image": strip.image, "graph": graph.build(words, self.options), "units": sum(len(w) for w in words), "targets": targets,
+            if frame_labels is not None and self.options.lifts and self.config.lift_cuts:
+                targets = anchors.lifts_at_cuts(encoded, dict(cuts), strip, stride, frame_labels, targets)
+        elif self.anchors is not None and self.anchors[i]:
+            targets, target_frames, frame_labels = anchors.frame_targets(self.anchors[i], strip, flat, frames, stride, shift)
+        item = {"image": strip.image, "graph": graph.build(words, self.options), "units": sum(len(w) for w in words), "targets": targets,
                 "frame_labels": frame_labels, "empty": strip.empty_frames(stride),
                 "labels": [[label for label, _ in word] for word in words]}
+        if target_frames is not None:
+            item["target_frames"] = target_frames
+        if self.options.lifts:
+            item["open"] = strip.open_frames(stride)
+        return item
 
     def _frame_labels(self, encoded, words, cut_at: dict, strip, frames: int) -> np.ndarray | None:
         labels = np.zeros(frames, np.int64)
@@ -287,18 +302,27 @@ def collate(items: list[dict], stride: int = 4) -> dict:
     target_mask = torch.zeros(len(items), frames, dtype=torch.bool)
     frame_labels = torch.full((len(items), frames), -100, dtype=torch.int64)
     empty = torch.ones(len(items), frames, dtype=torch.bool)
+    open_frames = torch.zeros(len(items), frames, dtype=torch.bool) if any("open" in item for item in items) else None
     for b, item in enumerate(items):
         n = item["image"].shape[1] // stride
         empty[b, :n] = torch.from_numpy(item["empty"][:n])
-        if item["targets"] is not None:
+        if item.get("target_frames") is not None:
+            target_mask[b, :n] = torch.from_numpy(item["target_frames"][:n])
+            targets[b, item["targets"]] = 1.0
+        elif item["targets"] is not None:
             target_mask[b, :n] = True
             targets[b, item["targets"]] = 1.0
         if item.get("frame_labels") is not None:
             frame_labels[b, :n] = torch.from_numpy(item["frame_labels"][:n])
-    return {"images": images, "widths": torch.tensor([item["image"].shape[1] for item in items]),
-            "graphs": graph.pack([item["graph"] for item in items]), "units": torch.tensor([item["units"] for item in items]),
-            "targets": targets, "target_mask": target_mask, "frame_labels": frame_labels, "empty": empty,
-            "labels": [item["labels"] for item in items]}
+        if item.get("open") is not None:
+            open_frames[b, :n] = torch.from_numpy(item["open"][:n])
+    batch = {"images": images, "widths": torch.tensor([item["image"].shape[1] for item in items]),
+             "graphs": graph.pack([item["graph"] for item in items]), "units": torch.tensor([item["units"] for item in items]),
+             "targets": targets, "target_mask": target_mask, "frame_labels": frame_labels, "empty": empty,
+             "labels": [item["labels"] for item in items]}
+    if open_frames is not None:
+        batch["open"] = open_frames
+    return batch
 
 
 def geometry_config(config: TrainConfig) -> GeometryConfig:
@@ -404,8 +428,9 @@ class Trainer:
             self._update_prior(logp, lengths)
         empty = batch["empty"].to(self.device)
         prior_scale = self.objective.prior_scale if train else self.objective.decode_prior_scale
+        open_frames = batch["open"].to(self.device) if "open" in batch else None
         nll = graph.nll(logp, boundary.float(), graphs, lengths, self.options, self.objective.normalise, self.model.log_prior,
-                        prior_scale, empty)
+                        prior_scale, empty, open_frames)
         units = batch["units"].to(self.device)
         ok = torch.isfinite(nll)
         nll_sum = torch.where(ok, nll, torch.zeros_like(nll)).sum()

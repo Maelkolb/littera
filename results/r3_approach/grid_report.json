@@ -1,0 +1,23 @@
+{
+ "base": {},
+ "keep": {
+  "inner_edges": "keep"
+ },
+ "keep snap-cuts": {
+  "inner_edges": "keep",
+  "lift_snap": "cuts"
+ },
+ "keep lifts f0 e-6": {
+  "inner_edges": "keep",
+  "lifts": true,
+  "lift_frame": 0.0,
+  "lift_enter": -6.0,
+  "lift_snap": "lifts"
+ },
+ "keep lifts f0 e-6 nosnap": {
+  "inner_edges": "keep",
+  "lifts": true,
+  "lift_frame": 0.0,
+  "lift_enter": -6.0
+ }
+}

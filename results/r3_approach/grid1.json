@@ -1,0 +1,60 @@
+{
+ "base": {},
+ "snap-cuts": {
+  "lift_snap": "cuts"
+ },
+ "lifts f0 e0": {
+  "lifts": true,
+  "lift_frame": 0.0,
+  "lift_enter": 0.0,
+  "lift_snap": "lifts"
+ },
+ "lifts f0 e-4": {
+  "lifts": true,
+  "lift_frame": 0.0,
+  "lift_enter": -4.0,
+  "lift_snap": "lifts"
+ },
+ "lifts f0 e-8": {
+  "lifts": true,
+  "lift_frame": 0.0,
+  "lift_enter": -8.0,
+  "lift_snap": "lifts"
+ },
+ "lifts f-3 e0": {
+  "lifts": true,
+  "lift_frame": -3.0,
+  "lift_enter": 0.0,
+  "lift_snap": "lifts"
+ },
+ "lifts f-3 e-4": {
+  "lifts": true,
+  "lift_frame": -3.0,
+  "lift_enter": -4.0,
+  "lift_snap": "lifts"
+ },
+ "lifts f-3 e-8": {
+  "lifts": true,
+  "lift_frame": -3.0,
+  "lift_enter": -8.0,
+  "lift_snap": "lifts"
+ },
+ "lifts f-6 e0": {
+  "lifts": true,
+  "lift_frame": -6.0,
+  "lift_enter": 0.0,
+  "lift_snap": "lifts"
+ },
+ "lifts f-6 e-4": {
+  "lifts": true,
+  "lift_frame": -6.0,
+  "lift_enter": -4.0,
+  "lift_snap": "lifts"
+ },
+ "lifts f-6 e-8": {
+  "lifts": true,
+  "lift_frame": -6.0,
+  "lift_enter": -8.0,
+  "lift_snap": "lifts"
+ }
+}

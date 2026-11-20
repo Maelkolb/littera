@@ -1,0 +1,1780 @@
+{
+ "thresholds": {
+  "bar_letters": 2.0,
+  "step_letters": 0.5,
+  "min_peak_nats": 1.0
+ },
+ "placers": {
+  "even": {
+   "val": {
+    "centre_inside_span": [
+     45.21,
+     41.85,
+     48.75,
+     2966
+    ],
+    "mean_offset_letters": [
+     2.32,
+     1.889,
+     2.821,
+     2966
+    ],
+    "mean_signed_offset_letters": [
+     -0.571,
+     -0.901,
+     -0.274
+    ],
+    "tokens_with_evidence": [
+     94.07,
+     93.05,
+     95.05,
+     3153
+    ]
+   },
+   "test_page": {
+    "centre_inside_span": [
+     44.28,
+     41.01,
+     47.48,
+     2753
+    ],
+    "mean_offset_letters": [
+     2.41,
+     1.908,
+     2.966,
+     2753
+    ],
+    "mean_signed_offset_letters": [
+     -0.085,
+     -0.51,
+     0.367
+    ],
+    "tokens_with_evidence": [
+     93.74,
+     92.43,
+     95.02,
+     2937
+    ]
+   },
+   "dev": {
+    "centre_inside_span": [
+     44.76,
+     42.48,
+     47.28,
+     5719
+    ],
+    "mean_offset_letters": [
+     2.363,
+     2.011,
+     2.761,
+     5719
+    ],
+    "mean_signed_offset_letters": [
+     -0.337,
+     -0.574,
+     -0.072
+    ],
+    "tokens_with_evidence": [
+     93.91,
+     93.02,
+     94.67,
+     6090
+    ]
+   },
+   "test_bench": {
+    "centre_inside_span": [
+     54.37,
+     51.82,
+     57.15,
+     2505
+    ],
+    "mean_offset_letters": [
+     1.494,
+     1.244,
+     1.836,
+     2505
+    ],
+    "mean_signed_offset_letters": [
+     -0.069,
+     -0.237,
+     0.1
+    ],
+    "tokens_with_evidence": [
+     96.72,
+     95.94,
+     97.45,
+     2590
+    ]
+   },
+   "test_journal": {
+    "centre_inside_span": [
+     45.74,
+     42.96,
+     48.47,
+     3417
+    ],
+    "mean_offset_letters": [
+     1.746,
+     1.556,
+     1.974,
+     3417
+    ],
+    "mean_signed_offset_letters": [
+     -0.553,
+     -0.783,
+     -0.315
+    ],
+    "tokens_with_evidence": [
+     95.26,
+     94.42,
+     96.1,
+     3587
+    ]
+   },
+   "letters": {
+    "centre_inside_span": [
+     46.19,
+     43.24,
+     48.95,
+     3687
+    ],
+    "mean_offset_letters": [
+     1.835,
+     1.66,
+     2.041,
+     3687
+    ],
+    "mean_signed_offset_letters": [
+     -0.647,
+     -0.856,
+     -0.446
+    ],
+    "tokens_with_evidence": [
+     94.95,
+     94.14,
+     95.74,
+     3883
+    ]
+   },
+   "report": {
+    "centre_inside_span": [
+     48.16,
+     46.51,
+     49.74,
+     9609
+    ],
+    "mean_offset_letters": [
+     1.715,
+     1.59,
+     1.854,
+     9609
+    ],
+    "mean_signed_offset_letters": [
+     -0.463,
+     -0.589,
+     -0.344
+    ],
+    "tokens_with_evidence": [
+     95.52,
+     95.01,
+     96.0,
+     10060
+    ]
+   }
+  },
+  "k2-raw-mid": {
+   "val": {
+    "centre_inside_span": [
+     74.95,
+     72.08,
+     77.59,
+     2966
+    ],
+    "mean_offset_letters": [
+     1.383,
+     0.939,
+     2.05,
+     2966
+    ],
+    "mean_signed_offset_letters": [
+     -0.002,
+     -0.404,
+     0.607
+    ],
+    "tokens_with_evidence": [
+     94.07,
+     93.05,
+     95.05,
+     3153
+    ]
+   },
+   "test_page": {
+    "centre_inside_span": [
+     74.39,
+     72.05,
+     76.58,
+     2753
+    ],
+    "mean_offset_letters": [
+     1.192,
+     0.914,
+     1.538,
+     2753
+    ],
+    "mean_signed_offset_letters": [
+     -0.571,
+     -0.882,
+     -0.338
+    ],
+    "tokens_with_evidence": [
+     93.74,
+     92.43,
+     95.02,
+     2937
+    ]
+   },
+   "dev": {
+    "centre_inside_span": [
+     74.68,
+     72.71,
+     76.36,
+     5719
+    ],
+    "mean_offset_letters": [
+     1.291,
+     1.007,
+     1.71,
+     5719
+    ],
+    "mean_signed_offset_letters": [
+     -0.276,
+     -0.533,
+     0.111
+    ],
+    "tokens_with_evidence": [
+     93.91,
+     93.02,
+     94.67,
+     6090
+    ]
+   },
+   "test_bench": {
+    "centre_inside_span": [
+     78.12,
+     76.05,
+     79.98,
+     2505
+    ],
+    "mean_offset_letters": [
+     0.895,
+     0.701,
+     1.165,
+     2505
+    ],
+    "mean_signed_offset_letters": [
+     -0.292,
+     -0.509,
+     -0.045
+    ],
+    "tokens_with_evidence": [
+     96.72,
+     95.94,
+     97.45,
+     2590
+    ]
+   },
+   "test_journal": {
+    "centre_inside_span": [
+     74.48,
+     72.45,
+     76.46,
+     3417
+    ],
+    "mean_offset_letters": [
+     0.935,
+     0.809,
+     1.1,
+     3417
+    ],
+    "mean_signed_offset_letters": [
+     -0.397,
+     -0.559,
+     -0.274
+    ],
+    "tokens_with_evidence": [
+     95.26,
+     94.42,
+     96.1,
+     3587
+    ]
+   },
+   "letters": {
+    "centre_inside_span": [
+     75.26,
+     73.63,
+     76.86,
+     3687
+    ],
+    "mean_offset_letters": [
+     0.958,
+     0.845,
+     1.085,
+     3687
+    ],
+    "mean_signed_offset_letters": [
+     -0.205,
+     -0.299,
+     -0.101
+    ],
+    "tokens_with_evidence": [
+     94.95,
+     94.14,
+     95.74,
+     3883
+    ]
+   },
+   "report": {
+    "centre_inside_span": [
+     75.73,
+     74.63,
+     76.74,
+     9609
+    ],
+    "mean_offset_letters": [
+     0.933,
+     0.848,
+     1.037,
+     9609
+    ],
+    "mean_signed_offset_letters": [
+     -0.296,
+     -0.379,
+     -0.215
+    ],
+    "tokens_with_evidence": [
+     95.52,
+     95.01,
+     96.0,
+     10060
+    ]
+   }
+  },
+  "k2-snap-mid": {
+   "val": {
+    "centre_inside_span": [
+     72.02,
+     69.33,
+     74.52,
+     2966
+    ],
+    "mean_offset_letters": [
+     1.387,
+     0.945,
+     2.055,
+     2966
+    ],
+    "mean_signed_offset_letters": [
+     0.183,
+     -0.218,
+     0.787
+    ],
+    "tokens_with_evidence": [
+     94.07,
+     93.05,
+     95.05,
+     3153
+    ]
+   },
+   "test_page": {
+    "centre_inside_span": [
+     72.28,
+     70.12,
+     74.43,
+     2753
+    ],
+    "mean_offset_letters": [
+     1.196,
+     0.912,
+     1.543,
+     2753
+    ],
+    "mean_signed_offset_letters": [
+     -0.411,
+     -0.722,
+     -0.175
+    ],
+    "tokens_with_evidence": [
+     93.74,
+     92.43,
+     95.02,
+     2937
+    ]
+   },
+   "dev": {
+    "centre_inside_span": [
+     72.15,
+     70.25,
+     73.84,
+     5719
+    ],
+    "mean_offset_letters": [
+     1.295,
+     1.007,
+     1.713,
+     5719
+    ],
+    "mean_signed_offset_letters": [
+     -0.103,
+     -0.36,
+     0.282
+    ],
+    "tokens_with_evidence": [
+     93.91,
+     93.02,
+     94.67,
+     6090
+    ]
+   },
+   "test_bench": {
+    "centre_inside_span": [
+     74.37,
+     72.46,
+     76.22,
+     2505
+    ],
+    "mean_offset_letters": [
+     0.915,
+     0.72,
+     1.182,
+     2505
+    ],
+    "mean_signed_offset_letters": [
+     -0.134,
+     -0.343,
+     0.104
+    ],
+    "tokens_with_evidence": [
+     96.72,
+     95.94,
+     97.45,
+     2590
+    ]
+   },
+   "test_journal": {
+    "centre_inside_span": [
+     71.64,
+     69.7,
+     73.44,
+     3417
+    ],
+    "mean_offset_letters": [
+     0.961,
+     0.838,
+     1.121,
+     3417
+    ],
+    "mean_signed_offset_letters": [
+     -0.245,
+     -0.404,
+     -0.123
+    ],
+    "tokens_with_evidence": [
+     95.26,
+     94.42,
+     96.1,
+     3587
+    ]
+   },
+   "letters": {
+    "centre_inside_span": [
+     71.85,
+     70.22,
+     73.45,
+     3687
+    ],
+    "mean_offset_letters": [
+     0.966,
+     0.855,
+     1.1,
+     3687
+    ],
+    "mean_signed_offset_letters": [
+     0.006,
+     -0.091,
+     0.109
+    ],
+    "tokens_with_evidence": [
+     94.95,
+     94.14,
+     95.74,
+     3883
+    ]
+   },
+   "report": {
+    "centre_inside_span": [
+     72.43,
+     71.43,
+     73.42,
+     9609
+    ],
+    "mean_offset_letters": [
+     0.951,
+     0.867,
+     1.054,
+     9609
+    ],
+    "mean_signed_offset_letters": [
+     -0.12,
+     -0.203,
+     -0.038
+    ],
+    "tokens_with_evidence": [
+     95.52,
+     95.01,
+     96.0,
+     10060
+    ]
+   }
+  },
+  "mix:k2-raw-mid+k2-snap-mid": {
+   "val": {
+    "centre_inside_span": [
+     74.24,
+     71.49,
+     76.76,
+     2966
+    ],
+    "mean_offset_letters": [
+     1.373,
+     0.931,
+     2.039,
+     2966
+    ],
+    "mean_signed_offset_letters": [
+     0.083,
+     -0.32,
+     0.69
+    ],
+    "tokens_with_evidence": [
+     94.07,
+     93.05,
+     95.05,
+     3153
+    ]
+   },
+   "test_page": {
+    "centre_inside_span": [
+     74.25,
+     72.03,
+     76.41,
+     2753
+    ],
+    "mean_offset_letters": [
+     1.182,
+     0.901,
+     1.529,
+     2753
+    ],
+    "mean_signed_offset_letters": [
+     -0.501,
+     -0.811,
+     -0.267
+    ],
+    "tokens_with_evidence": [
+     93.74,
+     92.43,
+     95.02,
+     2937
+    ]
+   },
+   "dev": {
+    "centre_inside_span": [
+     74.24,
+     72.3,
+     75.98,
+     5719
+    ],
+    "mean_offset_letters": [
+     1.281,
+     0.993,
+     1.701,
+     5719
+    ],
+    "mean_signed_offset_letters": [
+     -0.198,
+     -0.457,
+     0.191
+    ],
+    "tokens_with_evidence": [
+     93.91,
+     93.02,
+     94.67,
+     6090
+    ]
+   },
+   "test_bench": {
+    "centre_inside_span": [
+     77.72,
+     75.74,
+     79.61,
+     2505
+    ],
+    "mean_offset_letters": [
+     0.893,
+     0.698,
+     1.162,
+     2505
+    ],
+    "mean_signed_offset_letters": [
+     -0.223,
+     -0.436,
+     0.024
+    ],
+    "tokens_with_evidence": [
+     96.72,
+     95.94,
+     97.45,
+     2590
+    ]
+   },
+   "test_journal": {
+    "centre_inside_span": [
+     73.69,
+     71.66,
+     75.61,
+     3417
+    ],
+    "mean_offset_letters": [
+     0.942,
+     0.816,
+     1.104,
+     3417
+    ],
+    "mean_signed_offset_letters": [
+     -0.339,
+     -0.5,
+     -0.215
+    ],
+    "tokens_with_evidence": [
+     95.26,
+     94.42,
+     96.1,
+     3587
+    ]
+   },
+   "letters": {
+    "centre_inside_span": [
+     74.78,
+     73.11,
+     76.44,
+     3687
+    ],
+    "mean_offset_letters": [
+     0.943,
+     0.831,
+     1.073,
+     3687
+    ],
+    "mean_signed_offset_letters": [
+     -0.112,
+     -0.207,
+     -0.009
+    ],
+    "tokens_with_evidence": [
+     94.95,
+     94.14,
+     95.74,
+     3883
+    ]
+   },
+   "report": {
+    "centre_inside_span": [
+     75.16,
+     74.07,
+     76.18,
+     9609
+    ],
+    "mean_offset_letters": [
+     0.93,
+     0.845,
+     1.034,
+     9609
+    ],
+    "mean_signed_offset_letters": [
+     -0.222,
+     -0.303,
+     -0.14
+    ],
+    "tokens_with_evidence": [
+     95.52,
+     95.01,
+     96.0,
+     10060
+    ]
+   }
+  },
+  "even@k2-snap-mid": {
+   "val": {
+    "centre_inside_span": [
+     70.97,
+     68.34,
+     73.46,
+     2966
+    ],
+    "mean_offset_letters": [
+     1.41,
+     0.969,
+     2.079,
+     2966
+    ],
+    "mean_signed_offset_letters": [
+     0.134,
+     -0.266,
+     0.739
+    ],
+    "tokens_with_evidence": [
+     94.07,
+     93.05,
+     95.05,
+     3153
+    ]
+   },
+   "test_page": {
+    "centre_inside_span": [
+     70.36,
+     67.9,
+     72.57,
+     2753
+    ],
+    "mean_offset_letters": [
+     1.229,
+     0.947,
+     1.575,
+     2753
+    ],
+    "mean_signed_offset_letters": [
+     -0.439,
+     -0.749,
+     -0.205
+    ],
+    "tokens_with_evidence": [
+     93.74,
+     92.43,
+     95.02,
+     2937
+    ]
+   },
+   "dev": {
+    "centre_inside_span": [
+     70.68,
+     68.63,
+     72.31,
+     5719
+    ],
+    "mean_offset_letters": [
+     1.323,
+     1.034,
+     1.743,
+     5719
+    ],
+    "mean_signed_offset_letters": [
+     -0.142,
+     -0.401,
+     0.245
+    ],
+    "tokens_with_evidence": [
+     93.91,
+     93.02,
+     94.67,
+     6090
+    ]
+   },
+   "test_bench": {
+    "centre_inside_span": [
+     73.05,
+     71.2,
+     74.9,
+     2505
+    ],
+    "mean_offset_letters": [
+     0.944,
+     0.747,
+     1.211,
+     2505
+    ],
+    "mean_signed_offset_letters": [
+     -0.192,
+     -0.405,
+     0.051
+    ],
+    "tokens_with_evidence": [
+     96.72,
+     95.94,
+     97.45,
+     2590
+    ]
+   },
+   "test_journal": {
+    "centre_inside_span": [
+     69.01,
+     67.09,
+     70.99,
+     3417
+    ],
+    "mean_offset_letters": [
+     1.003,
+     0.882,
+     1.165,
+     3417
+    ],
+    "mean_signed_offset_letters": [
+     -0.301,
+     -0.459,
+     -0.18
+    ],
+    "tokens_with_evidence": [
+     95.26,
+     94.42,
+     96.1,
+     3587
+    ]
+   },
+   "letters": {
+    "centre_inside_span": [
+     70.36,
+     68.74,
+     71.89,
+     3687
+    ],
+    "mean_offset_letters": [
+     1.008,
+     0.895,
+     1.143,
+     3687
+    ],
+    "mean_signed_offset_letters": [
+     -0.117,
+     -0.214,
+     -0.014
+    ],
+    "tokens_with_evidence": [
+     94.95,
+     94.14,
+     95.74,
+     3883
+    ]
+   },
+   "report": {
+    "centre_inside_span": [
+     70.58,
+     69.48,
+     71.6,
+     9609
+    ],
+    "mean_offset_letters": [
+     0.99,
+     0.907,
+     1.092,
+     9609
+    ],
+    "mean_signed_offset_letters": [
+     -0.202,
+     -0.286,
+     -0.122
+    ],
+    "tokens_with_evidence": [
+     95.52,
+     95.01,
+     96.0,
+     10060
+    ]
+   }
+  },
+  "pilot-upright": {
+   "val": {
+    "centre_inside_span": [
+     60.32,
+     57.33,
+     63.06,
+     2966
+    ],
+    "mean_offset_letters": [
+     1.675,
+     1.29,
+     2.2,
+     2966
+    ],
+    "mean_signed_offset_letters": [
+     -0.364,
+     -0.598,
+     -0.161
+    ],
+    "tokens_with_evidence": [
+     94.07,
+     92.89,
+     95.16,
+     3153
+    ]
+   },
+   "test_page": {
+    "centre_inside_span": [
+     59.28,
+     55.92,
+     62.36,
+     2753
+    ],
+    "mean_offset_letters": [
+     1.69,
+     1.325,
+     2.155,
+     2753
+    ],
+    "mean_signed_offset_letters": [
+     -0.265,
+     -0.588,
+     0.039
+    ],
+    "tokens_with_evidence": [
+     93.74,
+     92.29,
+     95.06,
+     2937
+    ]
+   },
+   "dev": {
+    "centre_inside_span": [
+     59.82,
+     57.67,
+     61.94,
+     5719
+    ],
+    "mean_offset_letters": [
+     1.682,
+     1.403,
+     2.013,
+     5719
+    ],
+    "mean_signed_offset_letters": [
+     -0.317,
+     -0.539,
+     -0.12
+    ],
+    "tokens_with_evidence": [
+     93.91,
+     93.01,
+     94.78,
+     6090
+    ]
+   },
+   "test_bench": {
+    "centre_inside_span": [
+     61.6,
+     58.83,
+     64.18,
+     2505
+    ],
+    "mean_offset_letters": [
+     1.239,
+     0.971,
+     1.605,
+     2505
+    ],
+    "mean_signed_offset_letters": [
+     -0.157,
+     -0.337,
+     0.024
+    ],
+    "tokens_with_evidence": [
+     96.72,
+     95.88,
+     97.5,
+     2590
+    ]
+   },
+   "test_journal": {
+    "centre_inside_span": [
+     61.55,
+     59.15,
+     63.82,
+     3417
+    ],
+    "mean_offset_letters": [
+     1.166,
+     1.008,
+     1.373,
+     3417
+    ],
+    "mean_signed_offset_letters": [
+     -0.248,
+     -0.435,
+     -0.066
+    ],
+    "tokens_with_evidence": [
+     95.26,
+     94.36,
+     96.02,
+     3587
+    ]
+   },
+   "letters": {
+    "centre_inside_span": [
+     59.29,
+     56.74,
+     61.62,
+     3687
+    ],
+    "mean_offset_letters": [
+     1.356,
+     1.18,
+     1.536,
+     3687
+    ],
+    "mean_signed_offset_letters": [
+     -0.156,
+     -0.306,
+     -0.007
+    ],
+    "tokens_with_evidence": [
+     94.95,
+     94.17,
+     95.77,
+     3883
+    ]
+   },
+   "report": {
+    "centre_inside_span": [
+     60.69,
+     59.16,
+     62.14,
+     9609
+    ],
+    "mean_offset_letters": [
+     1.258,
+     1.144,
+     1.396,
+     9609
+    ],
+    "mean_signed_offset_letters": [
+     -0.189,
+     -0.285,
+     -0.088
+    ],
+    "tokens_with_evidence": [
+     95.52,
+     95.03,
+     95.97,
+     10060
+    ]
+   }
+  },
+  "ft2-off": {
+   "val": {
+    "centre_inside_span": [
+     73.77,
+     71.14,
+     76.22,
+     2966
+    ],
+    "mean_offset_letters": [
+     1.301,
+     0.923,
+     1.893,
+     2966
+    ],
+    "mean_signed_offset_letters": [
+     -0.079,
+     -0.303,
+     0.15
+    ],
+    "tokens_with_evidence": [
+     94.07,
+     92.89,
+     95.16,
+     3153
+    ]
+   },
+   "test_page": {
+    "centre_inside_span": [
+     73.41,
+     71.24,
+     75.59,
+     2753
+    ],
+    "mean_offset_letters": [
+     1.146,
+     0.88,
+     1.494,
+     2753
+    ],
+    "mean_signed_offset_letters": [
+     -0.518,
+     -0.842,
+     -0.267
+    ],
+    "tokens_with_evidence": [
+     93.74,
+     92.29,
+     95.06,
+     2937
+    ]
+   },
+   "dev": {
+    "centre_inside_span": [
+     73.6,
+     71.95,
+     75.33,
+     5719
+    ],
+    "mean_offset_letters": [
+     1.226,
+     0.957,
+     1.551,
+     5719
+    ],
+    "mean_signed_offset_letters": [
+     -0.29,
+     -0.483,
+     -0.109
+    ],
+    "tokens_with_evidence": [
+     93.91,
+     93.01,
+     94.78,
+     6090
+    ]
+   },
+   "test_bench": {
+    "centre_inside_span": [
+     76.21,
+     74.39,
+     78.02,
+     2505
+    ],
+    "mean_offset_letters": [
+     0.887,
+     0.69,
+     1.156,
+     2505
+    ],
+    "mean_signed_offset_letters": [
+     -0.098,
+     -0.31,
+     0.157
+    ],
+    "tokens_with_evidence": [
+     96.72,
+     95.88,
+     97.5,
+     2590
+    ]
+   },
+   "test_journal": {
+    "centre_inside_span": [
+     73.98,
+     72.04,
+     75.75,
+     3417
+    ],
+    "mean_offset_letters": [
+     0.907,
+     0.787,
+     1.083,
+     3417
+    ],
+    "mean_signed_offset_letters": [
+     -0.297,
+     -0.455,
+     -0.187
+    ],
+    "tokens_with_evidence": [
+     95.26,
+     94.36,
+     96.02,
+     3587
+    ]
+   },
+   "letters": {
+    "centre_inside_span": [
+     73.58,
+     71.96,
+     75.1,
+     3687
+    ],
+    "mean_offset_letters": [
+     0.936,
+     0.816,
+     1.08,
+     3687
+    ],
+    "mean_signed_offset_letters": [
+     -0.023,
+     -0.129,
+     0.086
+    ],
+    "tokens_with_evidence": [
+     94.95,
+     94.17,
+     95.77,
+     3883
+    ]
+   },
+   "report": {
+    "centre_inside_span": [
+     74.41,
+     73.36,
+     75.4,
+     9609
+    ],
+    "mean_offset_letters": [
+     0.913,
+     0.818,
+     1.012,
+     9609
+    ],
+    "mean_signed_offset_letters": [
+     -0.14,
+     -0.226,
+     -0.052
+    ],
+    "tokens_with_evidence": [
+     95.52,
+     95.03,
+     95.97,
+     10060
+    ]
+   }
+  },
+  "ft2-upright": {
+   "val": {
+    "centre_inside_span": [
+     73.53,
+     70.71,
+     76.04,
+     2966
+    ],
+    "mean_offset_letters": [
+     1.336,
+     0.962,
+     1.924,
+     2966
+    ],
+    "mean_signed_offset_letters": [
+     -0.089,
+     -0.309,
+     0.137
+    ],
+    "tokens_with_evidence": [
+     94.07,
+     92.89,
+     95.16,
+     3153
+    ]
+   },
+   "test_page": {
+    "centre_inside_span": [
+     72.79,
+     70.32,
+     74.97,
+     2753
+    ],
+    "mean_offset_letters": [
+     1.172,
+     0.912,
+     1.517,
+     2753
+    ],
+    "mean_signed_offset_letters": [
+     -0.507,
+     -0.84,
+     -0.25
+    ],
+    "tokens_with_evidence": [
+     93.74,
+     92.29,
+     95.06,
+     2937
+    ]
+   },
+   "dev": {
+    "centre_inside_span": [
+     73.18,
+     71.53,
+     74.81,
+     5719
+    ],
+    "mean_offset_letters": [
+     1.257,
+     0.988,
+     1.581,
+     5719
+    ],
+    "mean_signed_offset_letters": [
+     -0.29,
+     -0.483,
+     -0.113
+    ],
+    "tokens_with_evidence": [
+     93.91,
+     93.01,
+     94.78,
+     6090
+    ]
+   },
+   "test_bench": {
+    "centre_inside_span": [
+     74.69,
+     72.92,
+     76.3,
+     2505
+    ],
+    "mean_offset_letters": [
+     0.917,
+     0.723,
+     1.179,
+     2505
+    ],
+    "mean_signed_offset_letters": [
+     -0.117,
+     -0.33,
+     0.137
+    ],
+    "tokens_with_evidence": [
+     96.72,
+     95.88,
+     97.5,
+     2590
+    ]
+   },
+   "test_journal": {
+    "centre_inside_span": [
+     72.84,
+     70.87,
+     74.83,
+     3417
+    ],
+    "mean_offset_letters": [
+     0.946,
+     0.822,
+     1.126,
+     3417
+    ],
+    "mean_signed_offset_letters": [
+     -0.3,
+     -0.453,
+     -0.192
+    ],
+    "tokens_with_evidence": [
+     95.26,
+     94.36,
+     96.02,
+     3587
+    ]
+   },
+   "letters": {
+    "centre_inside_span": [
+     73.31,
+     71.58,
+     74.96,
+     3687
+    ],
+    "mean_offset_letters": [
+     0.993,
+     0.873,
+     1.132,
+     3687
+    ],
+    "mean_signed_offset_letters": [
+     -0.052,
+     -0.157,
+     0.054
+    ],
+    "tokens_with_evidence": [
+     94.95,
+     94.17,
+     95.77,
+     3883
+    ]
+   },
+   "report": {
+    "centre_inside_span": [
+     73.5,
+     72.43,
+     74.57,
+     9609
+    ],
+    "mean_offset_letters": [
+     0.956,
+     0.863,
+     1.055,
+     9609
+    ],
+    "mean_signed_offset_letters": [
+     -0.157,
+     -0.241,
+     -0.07
+    ],
+    "tokens_with_evidence": [
+     95.52,
+     95.03,
+     95.97,
+     10060
+    ]
+   }
+  },
+  "mix:ft2-off+ft2-upright": {
+   "val": {
+    "centre_inside_span": [
+     74.28,
+     71.61,
+     76.72,
+     2966
+    ],
+    "mean_offset_letters": [
+     1.319,
+     0.942,
+     1.905,
+     2966
+    ],
+    "mean_signed_offset_letters": [
+     -0.086,
+     -0.307,
+     0.139
+    ],
+    "tokens_with_evidence": [
+     94.07,
+     92.89,
+     95.16,
+     3153
+    ]
+   },
+   "test_page": {
+    "centre_inside_span": [
+     73.45,
+     71.27,
+     75.67,
+     2753
+    ],
+    "mean_offset_letters": [
+     1.157,
+     0.896,
+     1.507,
+     2753
+    ],
+    "mean_signed_offset_letters": [
+     -0.516,
+     -0.846,
+     -0.264
+    ],
+    "tokens_with_evidence": [
+     93.74,
+     92.29,
+     95.06,
+     2937
+    ]
+   },
+   "dev": {
+    "centre_inside_span": [
+     73.88,
+     72.14,
+     75.61,
+     5719
+    ],
+    "mean_offset_letters": [
+     1.241,
+     0.975,
+     1.564,
+     5719
+    ],
+    "mean_signed_offset_letters": [
+     -0.293,
+     -0.487,
+     -0.114
+    ],
+    "tokens_with_evidence": [
+     93.91,
+     93.01,
+     94.78,
+     6090
+    ]
+   },
+   "test_bench": {
+    "centre_inside_span": [
+     76.53,
+     74.77,
+     78.25,
+     2505
+    ],
+    "mean_offset_letters": [
+     0.896,
+     0.702,
+     1.159,
+     2505
+    ],
+    "mean_signed_offset_letters": [
+     -0.108,
+     -0.317,
+     0.146
+    ],
+    "tokens_with_evidence": [
+     96.72,
+     95.88,
+     97.5,
+     2590
+    ]
+   },
+   "test_journal": {
+    "centre_inside_span": [
+     73.98,
+     72.02,
+     75.85,
+     3417
+    ],
+    "mean_offset_letters": [
+     0.922,
+     0.801,
+     1.096,
+     3417
+    ],
+    "mean_signed_offset_letters": [
+     -0.302,
+     -0.453,
+     -0.194
+    ],
+    "tokens_with_evidence": [
+     95.26,
+     94.36,
+     96.02,
+     3587
+    ]
+   },
+   "letters": {
+    "centre_inside_span": [
+     74.67,
+     72.99,
+     76.22,
+     3687
+    ],
+    "mean_offset_letters": [
+     0.962,
+     0.842,
+     1.105,
+     3687
+    ],
+    "mean_signed_offset_letters": [
+     -0.036,
+     -0.142,
+     0.071
+    ],
+    "tokens_with_evidence": [
+     94.95,
+     94.17,
+     95.77,
+     3883
+    ]
+   },
+   "report": {
+    "centre_inside_span": [
+     74.91,
+     73.88,
+     75.9,
+     9609
+    ],
+    "mean_offset_letters": [
+     0.931,
+     0.836,
+     1.029,
+     9609
+    ],
+    "mean_signed_offset_letters": [
+     -0.149,
+     -0.235,
+     -0.063
+    ],
+    "tokens_with_evidence": [
+     95.52,
+     95.03,
+     95.97,
+     10060
+    ]
+   }
+  },
+  "even@ft2-upright": {
+   "val": {
+    "centre_inside_span": [
+     70.73,
+     68.14,
+     73.05,
+     2966
+    ],
+    "mean_offset_letters": [
+     1.36,
+     0.987,
+     1.936,
+     2966
+    ],
+    "mean_signed_offset_letters": [
+     -0.067,
+     -0.284,
+     0.158
+    ],
+    "tokens_with_evidence": [
+     94.07,
+     92.89,
+     95.16,
+     3153
+    ]
+   },
+   "test_page": {
+    "centre_inside_span": [
+     69.67,
+     67.27,
+     71.97,
+     2753
+    ],
+    "mean_offset_letters": [
+     1.212,
+     0.949,
+     1.56,
+     2753
+    ],
+    "mean_signed_offset_letters": [
+     -0.453,
+     -0.79,
+     -0.195
+    ],
+    "tokens_with_evidence": [
+     93.74,
+     92.29,
+     95.06,
+     2937
+    ]
+   },
+   "dev": {
+    "centre_inside_span": [
+     70.22,
+     68.55,
+     71.9,
+     5719
+    ],
+    "mean_offset_letters": [
+     1.289,
+     1.02,
+     1.609,
+     5719
+    ],
+    "mean_signed_offset_letters": [
+     -0.253,
+     -0.445,
+     -0.074
+    ],
+    "tokens_with_evidence": [
+     93.91,
+     93.01,
+     94.78,
+     6090
+    ]
+   },
+   "test_bench": {
+    "centre_inside_span": [
+     71.82,
+     69.93,
+     73.59,
+     2505
+    ],
+    "mean_offset_letters": [
+     0.953,
+     0.756,
+     1.212,
+     2505
+    ],
+    "mean_signed_offset_letters": [
+     -0.093,
+     -0.306,
+     0.158
+    ],
+    "tokens_with_evidence": [
+     96.72,
+     95.88,
+     97.5,
+     2590
+    ]
+   },
+   "test_journal": {
+    "centre_inside_span": [
+     68.86,
+     66.96,
+     70.57,
+     3417
+    ],
+    "mean_offset_letters": [
+     0.988,
+     0.865,
+     1.161,
+     3417
+    ],
+    "mean_signed_offset_letters": [
+     -0.27,
+     -0.428,
+     -0.164
+    ],
+    "tokens_with_evidence": [
+     95.26,
+     94.36,
+     96.02,
+     3587
+    ]
+   },
+   "letters": {
+    "centre_inside_span": [
+     69.95,
+     68.18,
+     71.5,
+     3687
+    ],
+    "mean_offset_letters": [
+     1.04,
+     0.921,
+     1.178,
+     3687
+    ],
+    "mean_signed_offset_letters": [
+     -0.048,
+     -0.16,
+     0.063
+    ],
+    "tokens_with_evidence": [
+     94.95,
+     94.17,
+     95.77,
+     3883
+    ]
+   },
+   "report": {
+    "centre_inside_span": [
+     70.05,
+     68.99,
+     71.06,
+     9609
+    ],
+    "mean_offset_letters": [
+     0.999,
+     0.906,
+     1.094,
+     9609
+    ],
+    "mean_signed_offset_letters": [
+     -0.139,
+     -0.223,
+     -0.052
+    ],
+    "tokens_with_evidence": [
+     95.52,
+     95.03,
+     95.97,
+     10060
+    ]
+   }
+  }
+ },
+ "evidence_lines": 1000
+}

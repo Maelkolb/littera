@@ -1,0 +1,359 @@
+{
+ "littera-pilot-seg|synth-heldfonts|report|base": {
+  "options": {},
+  "lines": 1000,
+  "lifts": 0,
+  "lift_edges": 0,
+  "inner_cuts": 28971,
+  "seconds_per_line": 0.4,
+  "line_fit_mean": 0.5575,
+  "word": {
+   "n": 13320,
+   "mean": 0.1052,
+   "median": 0.046,
+   "p90": 0.2133,
+   "within_0.25": 0.9191,
+   "within_0.5": 0.9616,
+   "words": 6660,
+   "iou": 0.9452,
+   "both_ends_within_0.5": 0.9285,
+   "q_auc": 0.7031,
+   "q_ece": 0.0541,
+   "q_mean": 0.9733
+  },
+  "letter": {
+   "n": 28971,
+   "mean": 0.1443,
+   "median": 0.0843,
+   "p90": 0.3244,
+   "within_0.25": 0.8639,
+   "within_0.5": 0.9452,
+   "q_auc": 0.7266,
+   "q_ece": 0.0635
+  },
+  "char": {
+   "n": 35631,
+   "both_cuts_within_0.25": 0.8247,
+   "q_auc": 0.7264,
+   "q_ece": 0.108,
+   "q_mean": 0.9306
+  },
+  "gap_rate": 0.9816
+ },
+ "littera-pilot-seg|synth-heldfonts|report|keep": {
+  "options": {
+   "inner_edges": "keep"
+  },
+  "lines": 1000,
+  "lifts": 0,
+  "lift_edges": 0,
+  "inner_cuts": 28971,
+  "seconds_per_line": 0.396,
+  "line_fit_mean": 0.5575,
+  "word": {
+   "n": 13320,
+   "mean": 0.1052,
+   "median": 0.046,
+   "p90": 0.2133,
+   "within_0.25": 0.9191,
+   "within_0.5": 0.9616,
+   "words": 6660,
+   "iou": 0.9452,
+   "both_ends_within_0.5": 0.9285,
+   "q_auc": 0.7031,
+   "q_ece": 0.0541,
+   "q_mean": 0.9733
+  },
+  "letter": {
+   "n": 28971,
+   "mean": 0.0821,
+   "median": 0.0559,
+   "p90": 0.1377,
+   "within_0.25": 0.9544,
+   "within_0.5": 0.9804,
+   "q_auc": 0.7969,
+   "q_ece": 0.0709
+  },
+  "char": {
+   "n": 35631,
+   "both_cuts_within_0.25": 0.9206,
+   "q_auc": 0.8352,
+   "q_ece": 0.027,
+   "q_mean": 0.9306
+  },
+  "gap_rate": 0.9816
+ },
+ "littera-pilot-seg|synth-heldfonts|report|keep snap-cuts": {
+  "options": {
+   "inner_edges": "keep",
+   "lift_snap": "cuts"
+  },
+  "lines": 1000,
+  "lifts": 0,
+  "lift_edges": 22451,
+  "inner_cuts": 28971,
+  "seconds_per_line": 0.395,
+  "line_fit_mean": 0.5575,
+  "word": {
+   "n": 13320,
+   "mean": 0.1052,
+   "median": 0.046,
+   "p90": 0.2133,
+   "within_0.25": 0.9191,
+   "within_0.5": 0.9616,
+   "words": 6660,
+   "iou": 0.9452,
+   "both_ends_within_0.5": 0.9285,
+   "q_auc": 0.7031,
+   "q_ece": 0.0541,
+   "q_mean": 0.9733
+  },
+  "letter": {
+   "n": 28971,
+   "mean": 0.0678,
+   "median": 0.0308,
+   "p90": 0.1259,
+   "within_0.25": 0.9473,
+   "within_0.5": 0.9749,
+   "q_auc": 0.7981,
+   "q_ece": 0.0653
+  },
+  "char": {
+   "n": 35631,
+   "both_cuts_within_0.25": 0.895,
+   "q_auc": 0.7805,
+   "q_ece": 0.0475,
+   "q_mean": 0.9306
+  },
+  "gap_rate": 0.9816
+ },
+ "littera-pilot-seg|synth-heldfonts|report|keep lifts f0 e-6": {
+  "options": {
+   "inner_edges": "keep",
+   "lifts": true,
+   "lift_frame": 0.0,
+   "lift_enter": -6.0,
+   "lift_snap": "lifts"
+  },
+  "lines": 1000,
+  "lifts": 5066,
+  "lift_edges": 4927,
+  "inner_cuts": 28971,
+  "seconds_per_line": 0.395,
+  "line_fit_mean": 0.5977,
+  "word": {
+   "n": 13320,
+   "mean": 0.1035,
+   "median": 0.0461,
+   "p90": 0.2118,
+   "within_0.25": 0.9196,
+   "within_0.5": 0.964,
+   "words": 6660,
+   "iou": 0.9461,
+   "both_ends_within_0.5": 0.9323,
+   "q_auc": 0.7196,
+   "q_ece": 0.05,
+   "q_mean": 0.9693
+  },
+  "letter": {
+   "n": 28971,
+   "mean": 0.0753,
+   "median": 0.0459,
+   "p90": 0.128,
+   "within_0.25": 0.9547,
+   "within_0.5": 0.9793,
+   "q_auc": 0.822,
+   "q_ece": 0.0786
+  },
+  "char": {
+   "n": 35631,
+   "both_cuts_within_0.25": 0.914,
+   "q_auc": 0.8052,
+   "q_ece": 0.0257,
+   "q_mean": 0.9211
+  },
+  "gap_rate": 0.9779
+ },
+ "littera-pilot-seg|synth-heldfonts|report|keep lifts f0 e-6 nosnap": {
+  "options": {
+   "inner_edges": "keep",
+   "lifts": true,
+   "lift_frame": 0.0,
+   "lift_enter": -6.0
+  },
+  "lines": 1000,
+  "lifts": 5066,
+  "lift_edges": 0,
+  "inner_cuts": 28971,
+  "seconds_per_line": 0.409,
+  "line_fit_mean": 0.5977,
+  "word": {
+   "n": 13320,
+   "mean": 0.1035,
+   "median": 0.0461,
+   "p90": 0.2118,
+   "within_0.25": 0.9196,
+   "within_0.5": 0.964,
+   "words": 6660,
+   "iou": 0.9461,
+   "both_ends_within_0.5": 0.9323,
+   "q_auc": 0.7196,
+   "q_ece": 0.05,
+   "q_mean": 0.9693
+  },
+  "letter": {
+   "n": 28971,
+   "mean": 0.0764,
+   "median": 0.0476,
+   "p90": 0.1343,
+   "within_0.25": 0.9544,
+   "within_0.5": 0.9819,
+   "q_auc": 0.8065,
+   "q_ece": 0.0811
+  },
+  "char": {
+   "n": 35631,
+   "both_cuts_within_0.25": 0.9217,
+   "q_auc": 0.8274,
+   "q_ece": 0.0224,
+   "q_mean": 0.9211
+  },
+  "gap_rate": 0.9779
+ },
+ "littera-pilot-seg|gw20-words|report|base": {
+  "options": {},
+  "lines": 328,
+  "lifts": 0,
+  "lift_edges": 0,
+  "inner_cuts": 0,
+  "seconds_per_line": 0.951,
+  "line_fit_mean": 0.2625,
+  "word": {
+   "n": 4872,
+   "mean": 0.4212,
+   "median": 0.3431,
+   "p90": 0.7783,
+   "within_0.25": 0.3413,
+   "within_0.5": 0.7133,
+   "words": 2436,
+   "iou": 0.7649,
+   "both_ends_within_0.5": 0.5074,
+   "q_auc": 0.5326,
+   "q_ece": 0.4513,
+   "q_mean": 0.9587
+  },
+  "gap_rate": 0.8961
+ },
+ "littera-pilot-seg|gw20-words|report|keep": {
+  "options": {
+   "inner_edges": "keep"
+  },
+  "lines": 328,
+  "lifts": 0,
+  "lift_edges": 0,
+  "inner_cuts": 0,
+  "seconds_per_line": 0.941,
+  "line_fit_mean": 0.2625,
+  "word": {
+   "n": 4872,
+   "mean": 0.4212,
+   "median": 0.3431,
+   "p90": 0.7783,
+   "within_0.25": 0.3413,
+   "within_0.5": 0.7133,
+   "words": 2436,
+   "iou": 0.7649,
+   "both_ends_within_0.5": 0.5074,
+   "q_auc": 0.5326,
+   "q_ece": 0.4513,
+   "q_mean": 0.9587
+  },
+  "gap_rate": 0.8961
+ },
+ "littera-pilot-seg|gw20-words|report|keep snap-cuts": {
+  "options": {
+   "inner_edges": "keep",
+   "lift_snap": "cuts"
+  },
+  "lines": 328,
+  "lifts": 0,
+  "lift_edges": 6234,
+  "inner_cuts": 0,
+  "seconds_per_line": 0.946,
+  "line_fit_mean": 0.2625,
+  "word": {
+   "n": 4872,
+   "mean": 0.4212,
+   "median": 0.3431,
+   "p90": 0.7783,
+   "within_0.25": 0.3413,
+   "within_0.5": 0.7133,
+   "words": 2436,
+   "iou": 0.7649,
+   "both_ends_within_0.5": 0.5074,
+   "q_auc": 0.5326,
+   "q_ece": 0.4513,
+   "q_mean": 0.9587
+  },
+  "gap_rate": 0.8961
+ },
+ "littera-pilot-seg|gw20-words|report|keep lifts f0 e-6": {
+  "options": {
+   "inner_edges": "keep",
+   "lifts": true,
+   "lift_frame": 0.0,
+   "lift_enter": -6.0,
+   "lift_snap": "lifts"
+  },
+  "lines": 328,
+  "lifts": 2808,
+  "lift_edges": 2493,
+  "inner_cuts": 0,
+  "seconds_per_line": 0.939,
+  "line_fit_mean": 0.3424,
+  "word": {
+   "n": 4872,
+   "mean": 0.4144,
+   "median": 0.3378,
+   "p90": 0.7628,
+   "within_0.25": 0.35,
+   "within_0.5": 0.7174,
+   "words": 2436,
+   "iou": 0.7692,
+   "both_ends_within_0.5": 0.5127,
+   "q_auc": 0.539,
+   "q_ece": 0.413,
+   "q_mean": 0.9256
+  },
+  "gap_rate": 0.8923
+ },
+ "littera-pilot-seg|gw20-words|report|keep lifts f0 e-6 nosnap": {
+  "options": {
+   "inner_edges": "keep",
+   "lifts": true,
+   "lift_frame": 0.0,
+   "lift_enter": -6.0
+  },
+  "lines": 328,
+  "lifts": 2808,
+  "lift_edges": 0,
+  "inner_cuts": 0,
+  "seconds_per_line": 0.922,
+  "line_fit_mean": 0.3424,
+  "word": {
+   "n": 4872,
+   "mean": 0.4144,
+   "median": 0.3378,
+   "p90": 0.7628,
+   "within_0.25": 0.35,
+   "within_0.5": 0.7174,
+   "words": 2436,
+   "iou": 0.7692,
+   "both_ends_within_0.5": 0.5127,
+   "q_auc": 0.539,
+   "q_ece": 0.413,
+   "q_mean": 0.9256
+  },
+  "gap_rate": 0.8923
+ }
+}

@@ -9,7 +9,7 @@ import torch
 from PIL import Image
 
 from littera import graph
-from littera.geometry import GeometryConfig, Strip, best_gap, ink_edge, ink_extent, prepare
+from littera.geometry import GeometryConfig, Strip, best_gap, free_runs, ink_edge, ink_extent, prepare
 from littera.graph import GraphOptions
 from littera.model import LineModel, load_model
 from littera.text import Codec, Encoded
@@ -51,6 +51,14 @@ class WordCuts:
     units: list[int]
     cuts: list[float]
     sigmas: list[float]
+    lifts: dict[int, tuple[float, float]] = field(default_factory=dict)
+    edges: dict[int, tuple[float, float]] = field(default_factory=dict)
+    kept: bool = False
+
+    def span(self, k: int) -> tuple[float, float]:
+        left = self.edges[k][1] if k in self.edges else self.cuts[k]
+        right = self.edges[k + 1][0] if k + 1 in self.edges else self.cuts[k + 1]
+        return left, right
 
 
 @dataclass
@@ -120,14 +128,20 @@ class Aligner:
     def _boundary_logs(self, boundary: torch.Tensor, scores: torch.Tensor):
         return graph.boundary_logs(boundary if self.decode.segmental else None, tuple(scores.shape[:2]), scores)
 
-    def _loglik(self, words: list[list[tuple[int, bool]]], logp, scores, logb, log1mb, lengths) -> float:
+    def _lift_scores(self, scores: torch.Tensor, strip: Strip) -> torch.Tensor | None:
+        if not (self.decode.lifts and self.decode.segmental):
+            return None
+        open_frames = torch.from_numpy(strip.open_frames(self.geometry.stride)).to(self.device)[None, : scores.shape[1]]
+        return graph.lift_scores(scores, self.decode, open_frames)
+
+    def _loglik(self, words: list[list[tuple[int, bool]]], logp, scores, logb, log1mb, lengths, lift=None) -> float:
         if not words:
             gap = scores[0, : int(lengths[0]), 0].sum()
             if self.decode.segmental:
                 gap = gap + log1mb[0, 1 : int(lengths[0])].sum()
             return float(gap)
         packed = graph.pack([graph.build(words, self.decode)], self.device)
-        E = graph.emissions(scores, packed, graph.garbage_scores(self._garbage_source(logp, scores), self.decode))
+        E = graph.emissions(scores, packed, graph.garbage_scores(self._garbage_source(logp, scores), self.decode), lift)
         with torch.no_grad():
             return float(graph.log_likelihood(E, logb, log1mb, packed, lengths)[0])
 
@@ -167,8 +181,9 @@ class Aligner:
 
         logp, scores, boundary, lengths = self.run(strip)
         logb, log1mb = self._boundary_logs(boundary, scores)
+        lift = self._lift_scores(scores, strip)
         packed = graph.pack([graph.build(words, self.decode)], self.device)
-        E = graph.emissions(scores, packed, graph.garbage_scores(self._garbage_source(logp, scores), self.decode))
+        E = graph.emissions(scores, packed, graph.garbage_scores(self._garbage_source(logp, scores), self.decode), lift)
         post = graph.posteriors(E, logb, log1mb, packed, lengths)
         loglik = float(post.log_likelihood[0])
         best_words = self._best_reading(scores, boundary, lengths)
@@ -191,6 +206,7 @@ class Aligner:
         end_var = np.maximum(((t + 1) ** 2 * leave).sum(0) / weight - end**2, 0)
         order = encoded.unit_order()
         word_index = encoded.graph_word_index()
+        lift_spans = self._lift_spans(post, packed, frames, n_units) if lift is not None else {}
 
         word_cuts: list[WordCuts] = []
         j = 0
@@ -225,6 +241,10 @@ class Aligner:
                     cuts.append(centres[visible[-1]] + half_step)
                     sigmas.append(spread[-1])
             word_cuts.append(WordCuts(word=word_index[w], units=[order[k] for k in visible], cuts=cuts, sigmas=sigmas))
+            for k, (a, b) in enumerate(zip(visible, visible[1:]), start=1):
+                found = [lift_spans[u] for u in range(a, b) if u in lift_spans]
+                if found:
+                    word_cuts[-1].lifts[k] = max(found, key=lambda span: span[1] - span[0])
             j += len(units)
 
         if self.snap == "strip":
@@ -235,6 +255,8 @@ class Aligner:
         elif self.snap == "upright":
             self._snap(word_cuts, profile, level, letter)
             self._monotone(word_cuts, strip.width)
+        if self.decode.lift_snap != "off" and not (self.snap == "upright" and strip.slant):
+            self._snap_lifts(word_cuts, profile, level)
 
         unit_q, word_q = {}, {}
         for wc in word_cuts:
@@ -257,10 +279,50 @@ class Aligner:
             gap = float(expected[f0:f1].sum() - best_frame[f0:f1].sum())
             word_fit[wc.word] = math.exp(min(0.0, gap) / len(units))
 
-        best = self._loglik([[(label, False) for label in word] for word in best_words], logp, scores, logb, log1mb, lengths)
+        best = self._loglik([[(label, False) for label in word] for word in best_words], logp, scores, logb, log1mb, lengths, lift)
         line_fit = math.exp(min(0.0, loglik - best) / n_units) if math.isfinite(best) else 0.0
-        return Analysis(strip, encoded, word_cuts, unit_q, word_q, word_fit, line_fit, letter, frames, loglik, best, reading,
-                        {"used": [round(float(u), 4) for u in used]})
+        extra = {"used": [round(float(u), 4) for u in used]}
+        if self.decode.inner_edges == "keep" and self.snap != "off":
+            extra["words_rescaled"] = sum(1 for wc in word_cuts if len(wc.units) > 1 and not wc.kept)
+        if lift is not None or self.decode.lift_snap != "off":
+            extra["lifts"] = sum(len(wc.lifts) for wc in word_cuts)
+            extra["lift_edges"] = sum(len(wc.edges) for wc in word_cuts)
+        return Analysis(strip, encoded, word_cuts, unit_q, word_q, word_fit, line_fit, letter, frames, loglik, best, reading, extra)
+
+    def _lift_spans(self, post: graph.Posteriors, packed: graph.Packed, frames: int, n_units: int) -> dict[int, tuple[float, float]]:
+        states = packed.lift_states[0, :n_units].cpu().numpy()
+        after = [j for j in range(n_units) if states[j] >= 0]
+        if not after:
+            return {}
+        columns = torch.as_tensor(states[after], device=post.occupancy.device)
+        entry = post.entry()[0, :frames][:, columns].clamp(min=0).cpu().numpy().astype(np.float64)
+        leave = post.exit()[0, :frames][:, columns].clamp(min=0).cpu().numpy().astype(np.float64)
+        t = np.arange(frames, dtype=np.float64)[:, None]
+        visited = entry.sum(0)
+        weight = np.maximum(visited, 1e-9)
+        first = (t * entry).sum(0) / weight * self.geometry.stride
+        last = ((t + 1) * leave).sum(0) / weight * self.geometry.stride
+        return {j: (float(first[k]), float(max(first[k], last[k]))) for k, j in enumerate(after) if visited[k] >= 0.5}
+
+    def _snap_lifts(self, words: list[WordCuts], profile: np.ndarray, level: float) -> None:
+        stride = self.geometry.stride
+        every_cut = self.decode.lift_snap == "cuts"
+        for wc in words:
+            for k in range(1, len(wc.cuts) - 1):
+                cut = wc.cuts[k]
+                span = wc.lifts.get(k) or ((cut - 0.5 * stride, cut + 0.5 * stride) if every_cut else None)
+                if span is None:
+                    continue
+                floor = int(math.ceil(wc.edges[k - 1][1] if k - 1 in wc.edges else wc.cuts[k - 1]))
+                ceiling = int(math.floor(wc.cuts[k + 1]))
+                lo, hi = span[0] - stride, span[1] + stride
+                runs = [(s, e) for s, e in free_runs(profile, level, floor, ceiling) if floor < s and e < ceiling and s < hi and e > lo]
+                if not runs:
+                    continue
+                s, e = max(runs, key=lambda r: (min(r[1], span[1]) - max(r[0], span[0]), r[1] - r[0]))
+                wc.cuts[k] = 0.5 * (s + e)
+                if self.decode.lift_edges == "ink":
+                    wc.edges[k] = (float(s), float(e))
 
     def _even_cuts(self, encoded: Encoded, extent: tuple[float, float]) -> list[WordCuts]:
         order = encoded.unit_order()
@@ -294,22 +356,40 @@ class Aligner:
             na, nb = new_edges[id(wc)]
             if nb <= na:
                 nb = na + 1.0
-            if b > a:
+            margin = 0.25 * (nb - na) / len(wc.units)
+            wc.kept = self.decode.inner_edges == "keep" and all(na + margin <= c <= nb - margin for c in wc.cuts[1:-1])
+            if wc.kept:
+                wc.cuts = [na] + wc.cuts[1:-1] + [nb]
+            elif b > a:
                 wc.cuts = [na + (c - a) * (nb - na) / (b - a) for c in wc.cuts]
+                scale = (nb - na) / (b - a)
+                wc.lifts = {k: (na + (u0 - a) * scale, na + (u1 - a) * scale) for k, (u0, u1) in wc.lifts.items()}
             else:
                 n = len(wc.cuts) - 1
                 wc.cuts = [na + k * (nb - na) / max(1, n) for k in range(n + 1)]
+                wc.lifts = {}
 
     def _snap_upright(self, image, polygon, baseline, strip: Strip, words: list[WordCuts], letter: float) -> None:
         upright = prepare(image, polygon, baseline, self.geometry, slant=0.0)
         profile = upright.core_profile()
         level = max(1.0, 0.02 * float(profile.max(initial=0)))
+        def to_upright(u: float) -> float:
+            return float(upright.strip_u(strip.crop_x(u)))
+
+        def to_strip(u: float) -> float:
+            return float(strip.strip_u(upright.crop_x(u)))
+
         for wc in words:
-            wc.cuts = [float(upright.strip_u(strip.crop_x(u))) for u in wc.cuts]
+            wc.cuts = [to_upright(u) for u in wc.cuts]
+            wc.lifts = {k: (to_upright(u0), to_upright(u1)) for k, (u0, u1) in wc.lifts.items()}
         self._snap(words, profile, level, letter)
         self._monotone(words, upright.width)
+        if self.decode.lift_snap != "off":
+            self._snap_lifts(words, profile, level)
         for wc in words:
-            wc.cuts = [float(strip.strip_u(upright.crop_x(u))) for u in wc.cuts]
+            wc.cuts = [to_strip(u) for u in wc.cuts]
+            wc.lifts = {k: (to_strip(u0), to_strip(u1)) for k, (u0, u1) in wc.lifts.items()}
+            wc.edges = {k: (to_strip(u0), to_strip(u1)) for k, (u0, u1) in wc.edges.items()}
 
     @staticmethod
     def _monotone(words: list[WordCuts], width: float) -> None:
@@ -328,7 +408,7 @@ class Aligner:
         word_span: dict[int, tuple[float, float]] = {}
         for wc in analysis.words:
             for k, unit in enumerate(wc.units):
-                span[unit] = (wc.cuts[k], wc.cuts[k + 1])
+                span[unit] = wc.span(k)
             if wc.units:
                 word_span[wc.word] = (wc.cuts[0], wc.cuts[-1])
 

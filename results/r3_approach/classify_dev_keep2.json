@@ -1,0 +1,440 @@
+{
+ "refs": [
+  "k2-snap-mid",
+  "ft2-upright"
+ ],
+ "against": "mix:ft2-off+ft2-upright",
+ "recipe": "32 x 32 crops, 3 conv blocks, 15 epochs, 2 folds of lines per half, 2 seeds",
+ "placers": {
+  "mix:ft2-off+ft2-upright": {
+   "val": {
+    "all": [
+     47.25,
+     44.73,
+     49.69,
+     6772
+    ],
+    "connected": [
+     46.14,
+     42.75,
+     49.39,
+     1439
+    ],
+    "other": [
+     47.54,
+     44.89,
+     50.14,
+     5333
+    ]
+   },
+   "test_page": {
+    "all": [
+     45.16,
+     42.78,
+     47.52,
+     6100
+    ],
+    "connected": [
+     44.62,
+     40.61,
+     48.38,
+     1226
+    ],
+    "other": [
+     45.3,
+     42.77,
+     47.72,
+     4874
+    ]
+   },
+   "dev": {
+    "all": [
+     46.26,
+     44.73,
+     47.96,
+     12872
+    ],
+    "connected": [
+     45.44,
+     42.8,
+     47.89,
+     2665
+    ],
+    "other": [
+     46.47,
+     44.86,
+     48.24,
+     10207
+    ]
+   }
+  },
+  "t-ft2-keep-cuts": {
+   "val": {
+    "all": [
+     45.25,
+     42.76,
+     47.63,
+     6772
+    ],
+    "connected": [
+     44.37,
+     41.19,
+     47.54,
+     1439
+    ],
+    "other": [
+     45.49,
+     42.69,
+     48.03,
+     5333
+    ],
+    "all_minus_mix:ft2-off+ft2-upright": [
+     -1.99,
+     -2.64,
+     -1.36
+    ],
+    "connected_minus_mix:ft2-off+ft2-upright": [
+     -1.77,
+     -2.89,
+     -0.52
+    ]
+   },
+   "test_page": {
+    "all": [
+     43.84,
+     41.35,
+     46.16,
+     6100
+    ],
+    "connected": [
+     42.7,
+     38.96,
+     46.17,
+     1226
+    ],
+    "other": [
+     44.13,
+     41.61,
+     46.54,
+     4874
+    ],
+    "all_minus_mix:ft2-off+ft2-upright": [
+     -1.32,
+     -2.02,
+     -0.58
+    ],
+    "connected_minus_mix:ft2-off+ft2-upright": [
+     -1.92,
+     -3.62,
+     -0.16
+    ]
+   },
+   "dev": {
+    "all": [
+     44.59,
+     43.03,
+     46.27,
+     12872
+    ],
+    "connected": [
+     43.6,
+     41.18,
+     46.01,
+     2665
+    ],
+    "other": [
+     44.84,
+     43.24,
+     46.69,
+     10207
+    ],
+    "all_minus_mix:ft2-off+ft2-upright": [
+     -1.67,
+     -2.19,
+     -1.22
+    ],
+    "connected_minus_mix:ft2-off+ft2-upright": [
+     -1.84,
+     -2.86,
+     -0.86
+    ]
+   }
+  },
+  "t-ft2-keep-lifts-e8": {
+   "val": {
+    "all": [
+     45.82,
+     43.28,
+     48.28,
+     6772
+    ],
+    "connected": [
+     44.68,
+     41.47,
+     48.06,
+     1439
+    ],
+    "other": [
+     46.13,
+     43.17,
+     48.77,
+     5333
+    ],
+    "all_minus_mix:ft2-off+ft2-upright": [
+     -1.42,
+     -2.14,
+     -0.73
+    ],
+    "connected_minus_mix:ft2-off+ft2-upright": [
+     -1.46,
+     -2.91,
+     0.14
+    ]
+   },
+   "test_page": {
+    "all": [
+     44.32,
+     41.81,
+     46.72,
+     6100
+    ],
+    "connected": [
+     43.27,
+     39.49,
+     46.69,
+     1226
+    ],
+    "other": [
+     44.58,
+     41.94,
+     47.1,
+     4874
+    ],
+    "all_minus_mix:ft2-off+ft2-upright": [
+     -0.84,
+     -1.61,
+     -0.09
+    ],
+    "connected_minus_mix:ft2-off+ft2-upright": [
+     -1.35,
+     -3.12,
+     0.25
+    ]
+   },
+   "dev": {
+    "all": [
+     45.11,
+     43.43,
+     46.83,
+     12872
+    ],
+    "connected": [
+     44.03,
+     41.46,
+     46.33,
+     2665
+    ],
+    "other": [
+     45.39,
+     43.6,
+     47.26,
+     10207
+    ],
+    "all_minus_mix:ft2-off+ft2-upright": [
+     -1.15,
+     -1.65,
+     -0.63
+    ],
+    "connected_minus_mix:ft2-off+ft2-upright": [
+     -1.41,
+     -2.49,
+     -0.34
+    ]
+   }
+  },
+  "t-lifts-keep": {
+   "val": {
+    "all": [
+     47.09,
+     44.52,
+     49.43,
+     6772
+    ],
+    "connected": [
+     45.31,
+     42.16,
+     48.44,
+     1439
+    ],
+    "other": [
+     47.57,
+     44.9,
+     50.11,
+     5333
+    ],
+    "all_minus_mix:ft2-off+ft2-upright": [
+     -0.16,
+     -0.77,
+     0.4
+    ],
+    "connected_minus_mix:ft2-off+ft2-upright": [
+     -0.83,
+     -2.33,
+     0.72
+    ]
+   },
+   "test_page": {
+    "all": [
+     44.84,
+     42.38,
+     47.2,
+     6100
+    ],
+    "connected": [
+     43.72,
+     40.14,
+     47.35,
+     1226
+    ],
+    "other": [
+     45.13,
+     42.66,
+     47.55,
+     4874
+    ],
+    "all_minus_mix:ft2-off+ft2-upright": [
+     -0.32,
+     -0.97,
+     0.39
+    ],
+    "connected_minus_mix:ft2-off+ft2-upright": [
+     -0.9,
+     -2.43,
+     0.69
+    ]
+   },
+   "dev": {
+    "all": [
+     46.03,
+     44.44,
+     47.71,
+     12872
+    ],
+    "connected": [
+     44.58,
+     42.09,
+     46.91,
+     2665
+    ],
+    "other": [
+     46.4,
+     44.72,
+     48.17,
+     10207
+    ],
+    "all_minus_mix:ft2-off+ft2-upright": [
+     -0.23,
+     -0.7,
+     0.19
+    ],
+    "connected_minus_mix:ft2-off+ft2-upright": [
+     -0.86,
+     -1.99,
+     0.18
+    ]
+   }
+  },
+  "t-lifts-keep-plain": {
+   "val": {
+    "all": [
+     47.23,
+     44.76,
+     49.67,
+     6772
+    ],
+    "connected": [
+     45.73,
+     42.34,
+     49.13,
+     1439
+    ],
+    "other": [
+     47.64,
+     45.02,
+     50.14,
+     5333
+    ],
+    "all_minus_mix:ft2-off+ft2-upright": [
+     -0.01,
+     -0.67,
+     0.65
+    ],
+    "connected_minus_mix:ft2-off+ft2-upright": [
+     -0.42,
+     -1.66,
+     0.81
+    ]
+   },
+   "test_page": {
+    "all": [
+     44.98,
+     42.55,
+     47.36,
+     6100
+    ],
+    "connected": [
+     43.64,
+     39.69,
+     47.21,
+     1226
+    ],
+    "other": [
+     45.32,
+     42.78,
+     47.76,
+     4874
+    ],
+    "all_minus_mix:ft2-off+ft2-upright": [
+     -0.18,
+     -0.81,
+     0.49
+    ],
+    "connected_minus_mix:ft2-off+ft2-upright": [
+     -0.98,
+     -2.22,
+     0.46
+    ]
+   },
+   "dev": {
+    "all": [
+     46.17,
+     44.58,
+     47.89,
+     12872
+    ],
+    "connected": [
+     44.77,
+     42.19,
+     47.27,
+     2665
+    ],
+    "other": [
+     46.53,
+     44.84,
+     48.3,
+     10207
+    ],
+    "all_minus_mix:ft2-off+ft2-upright": [
+     -0.09,
+     -0.58,
+     0.39
+    ],
+    "connected_minus_mix:ft2-off+ft2-upright": [
+     -0.68,
+     -1.59,
+     0.27
+    ]
+   }
+  }
+ }
+}

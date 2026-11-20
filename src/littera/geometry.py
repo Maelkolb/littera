@@ -96,6 +96,12 @@ class Strip:
         bottom = min(self.height, int(math.ceil(self.v_mid + 0.75 * self.core)))
         return (self.image[top:bottom] > self.ink_level()).sum(0).astype(np.float64)
 
+    def open_frames(self, stride: int) -> np.ndarray:
+        profile = self.core_profile()
+        free = profile <= gap_level(profile)
+        frames = self.width // stride
+        return free[: frames * stride].reshape(frames, stride).any(1)
+
 
 def ink_image(image: Image.Image) -> np.ndarray:
     grey = np.asarray(image.convert("L"), dtype=np.float32) / 255.0
@@ -403,6 +409,18 @@ def best_gap(profile: np.ndarray, lo: int, hi: int, raw: float, level: float) ->
     local = np.array([window[max(0, k - 1) : k + 2].sum() for k in range(len(window))])
     k = min(range(len(local)), key=lambda j: (local[j], abs(lo + j + 0.5 - raw)))
     return float(lo + k), float(lo + k + 1)
+
+
+def gap_level(profile: np.ndarray) -> float:
+    return max(1.0, 0.02 * float(profile.max(initial=0)))
+
+
+def free_runs(profile: np.ndarray, level: float, lo: int = 0, hi: int | None = None) -> list[tuple[int, int]]:
+    hi = len(profile) if hi is None else min(len(profile), hi)
+    lo = max(0, lo)
+    free = profile[lo:hi] <= level
+    edges = np.flatnonzero(np.diff(np.concatenate([[False], free, [False]]).astype(np.int8)))
+    return [(lo + int(a), lo + int(b)) for a, b in zip(edges[::2], edges[1::2])]
 
 
 def ink_edge(profile: np.ndarray, raw: float, reach: float, level: float, side: str) -> float:

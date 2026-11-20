@@ -358,3 +358,79 @@ def baselines(placers: str = "even,kraken-k2,kraken-mccatmus", sets: str = "gw20
     existing.update(scores)
     path.write_text(json.dumps(existing, indent=1, ensure_ascii=False), encoding="utf-8")
     print(f"wrote {path}")
+
+
+torch_image = (
+    modal.Image.debian_slim(python_version="3.12")
+    .pip_install("torch==2.15.0", "numpy==2.5.4", "pillow==13.0.0", "opencv-python-headless==5.0.0.93", "pyarrow==26.0.1", "lxml==6.1.3",
+                 "safetensors==0.8.0")
+    .env({"PYTHONUTF8": "1", "OMP_NUM_THREADS": "1"})
+    .add_local_python_source("littera")
+)
+DECODE_PRESETS = {"synth-heldfonts": "plain"}
+DECODE_PARTS = {"tune": 0, "report": 1}
+
+
+@app.function(image=torch_image, volumes={VOL: volume}, cpu=1.0, memory=3072, timeout=3600, max_containers=6)
+def decode_shard(model: str, set_name: str, variants: dict, part: str, shard: int, shards: int, limit: int) -> dict:
+    import time
+
+    import torch
+
+    from littera.eval.ink import ink_profile
+    from littera.eval.metrics import row_scores
+    from littera.eval.run import baseline_or_none, polygon_or_none
+    from littera.eval.sets import decode_image, iter_set, set_path
+    from littera.place import Aligner
+
+    torch.set_num_threads(1)
+    rows = [row for k, row in enumerate(iter_set(set_path(set_name, str(EVAL)))) if k % 2 == DECODE_PARTS[part]]
+    rows = (rows[:limit] if limit else rows)[shard::shards]
+    aligner = Aligner.load(VOL / "models" / model, device="cpu")
+    aligner.preset = DECODE_PRESETS.get(set_name, aligner.preset)
+    released = aligner.decode.to_dict()
+    out = {}
+    for name, options in variants.items():
+        snap = options.get("snap", "strip")
+        aligner.snap = snap
+        aligner.decode = type(aligner.decode)(**{**released, **{k: v for k, v in options.items() if k != "snap"}})
+        scores, lifts, edges, started = [], 0, 0, time.perf_counter()
+        for row in rows:
+            image = decode_image(row["image"])
+            polygon, baseline = polygon_or_none(row.get("polygon")), baseline_or_none(row.get("baseline"))
+            placement = aligner.place(image, row["text"], polygon=polygon, baseline=baseline)
+            lifts += placement.extra.get("lifts", 0)
+            edges += placement.extra.get("lift_edges", 0)
+            scores.append(row_scores(placement, row, ink_profile(image, polygon)))
+        out[name] = {"scores": scores, "lifts": lifts, "lift_edges": edges, "seconds": round(time.perf_counter() - started, 1)}
+    return out
+
+
+@app.local_entrypoint()
+def decode_grid(variants: str, model: str = "littera-pilot-seg", sets: str = "synth-heldfonts,gw20-words", part: str = "tune",
+                limit: int = 400, shards: int = 6, out: str = "results/r3_approach/decode.json"):
+    from littera.eval.metrics import aggregate
+
+    grid = json.loads(Path(variants).read_text(encoding="utf-8"))
+    path = Path(out)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    table = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    for set_name in sets.split(","):
+        parts = list(decode_shard.starmap([(model, set_name, grid, part, shard, shards, limit) for shard in range(shards)]))
+        for name, options in grid.items():
+            scores = [s for p in parts for s in p[name]["scores"]]
+            result = aggregate(scores, by_source=False)
+            cuts = sum(len(s["cuts"]) for s in scores)
+            row = {"options": options, "lines": len(scores), "lifts": sum(p[name]["lifts"] for p in parts),
+                   "lift_edges": sum(p[name]["lift_edges"] for p in parts), "inner_cuts": cuts,
+                   "seconds_per_line": round(sum(p[name]["seconds"] for p in parts) / max(1, len(scores)), 3),
+                   "line_fit_mean": round(sum(s["line_fit"] for s in scores) / max(1, len(scores)), 4),
+                   **{k: result[k] for k in ("word", "letter", "char", "gap_rate") if k in result}}
+            table[f"{model}|{set_name}|{part}|{name}"] = row
+            letter, word, char = row.get("letter", {}), row.get("word", {}), row.get("char", {})
+            print(f"{set_name:16s} {part:6s} {name:28s} letters<=.25 {letter.get('within_0.25')} med {letter.get('median')} "
+                  f"char {char.get('both_cuts_within_0.25')} word<=.25 {word.get('within_0.25')} med {word.get('median')} "
+                  f"gap {row.get('gap_rate')} fit {row['line_fit_mean']} lifts {row['lifts']} edges {row['lift_edges']} "
+                  f"s/line {row['seconds_per_line']}", flush=True)
+    path.write_text(json.dumps(table, indent=1, ensure_ascii=False), encoding="utf-8")
+    print(f"wrote {path}")

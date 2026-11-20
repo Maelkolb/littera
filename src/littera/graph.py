@@ -8,9 +8,14 @@ import torch
 from littera.text import ANY, GAP
 
 NEUTRAL, ENTER, STAY = 0, 1, 2
-UNIT, GAP_STATE, BLANK, GARBAGE = 0, 1, 2, 3
+UNIT, GAP_STATE, BLANK, GARBAGE, LIFT = 0, 1, 2, 3, 4
 START = -1
 GARBAGE_LABEL = -1
+LIFT_LABEL = -2
+CLOSED_FRAME = 1e4
+LIFT_SNAPS = ("off", "lifts", "cuts")
+INNER_EDGES = ("rescale", "keep")
+LIFT_EDGES = ("ink", "mid")
 NEG = float("-inf")
 TOPOLOGIES = ("ctc", "ctc_prior", "segmental")
 
@@ -27,6 +32,12 @@ class GraphOptions:
     garbage_frame: float = 1.0
     garbage: str = "any"
     ink_prior: float = 2.0
+    lifts: bool = False
+    lift_enter: float = 0.0
+    lift_frame: float = 0.0
+    lift_snap: str = "off"
+    lift_edges: str = "ink"
+    inner_edges: str = "rescale"
 
     @property
     def segmental(self) -> bool:
@@ -51,6 +62,7 @@ class LineGraph:
     unit_states: np.ndarray
     word_of_unit: np.ndarray
     segmental: bool
+    lift_states: np.ndarray | None = None
 
     @property
     def n_states(self) -> int:
@@ -67,6 +79,7 @@ class _Builder:
         self.start: dict[int, float] = {}
         self.unit_states: list[int] = []
         self.word_of_unit: list[int] = []
+        self.lift_states: list[int] = []
 
     def state(self, label: int, role: int) -> int:
         s = len(self.labels)
@@ -83,7 +96,7 @@ class _Builder:
             if src == START:
                 self.start[dst] = max(self.start.get(dst, NEG), weight)
                 continue
-            if self.roles[src] in (GAP_STATE, BLANK) and self.roles[dst] in (GAP_STATE, BLANK):
+            if self.roles[src] in (GAP_STATE, BLANK, LIFT) and self.roles[dst] in (GAP_STATE, BLANK, LIFT):
                 continue
             if not self.segmental and self.roles[src] == UNIT and self.roles[dst] == UNIT and self.labels[src] == self.labels[dst]:
                 continue
@@ -91,7 +104,8 @@ class _Builder:
             if old is None or old[1] < weight:
                 self.arcs[(src, dst)] = (kind, weight)
 
-    def unit(self, frontier: list[tuple[int, float]], label: int, optional: bool, blank_after: bool, word: int) -> list[tuple[int, float]]:
+    def unit(self, frontier: list[tuple[int, float]], label: int, optional: bool, blank_after: bool, word: int,
+             lift_after: bool = False) -> list[tuple[int, float]]:
         u = self.state(label, UNIT)
         self.connect(frontier, u)
         out = [(u, 0.0)]
@@ -99,14 +113,20 @@ class _Builder:
             blank = self.state(GAP, BLANK)
             self.connect([(u, 0.0)], blank)
             out.append((blank, 0.0))
+        lift = -1
+        if lift_after:
+            lift = self.state(LIFT_LABEL, LIFT)
+            self.connect([(u, 0.0)], lift, self.options.lift_enter)
+            out.append((lift, 0.0))
         if optional:
             out += [(s, c + self.options.skip_penalty) for s, c in frontier]
         self.unit_states.append(u)
         self.word_of_unit.append(word)
+        self.lift_states.append(lift)
         return out
 
     def junction(self, frontier: list[tuple[int, float]], required: bool, garbage: bool, skip_cost: float) -> list[tuple[int, float]]:
-        entry = [(s, c) for s, c in frontier if s == START or self.roles[s] != BLANK]
+        entry = [(s, c) for s, c in frontier if s == START or self.roles[s] not in (BLANK, LIFT)]
         gap = self.state(GAP, GAP_STATE)
         self.connect(entry, gap)
         out = [(gap, 0.0)]
@@ -129,7 +149,9 @@ def build(words: list[list[tuple[int, bool]]], options: GraphOptions) -> LineGra
             frontier = b.junction(frontier, required=options.spaces == "required", garbage=options.garbage_between,
                                   skip_cost=options.space_penalty)
         for j, (label, optional) in enumerate(units):
-            frontier = b.unit(frontier, label, optional, blank_after=not b.segmental and j < len(units) - 1, word=w)
+            inside = j < len(units) - 1
+            frontier = b.unit(frontier, label, optional, blank_after=not b.segmental and inside, word=w,
+                              lift_after=b.segmental and options.lifts and inside)
     frontier = b.junction(frontier, required=False, garbage=options.garbage_ends, skip_cost=0.0)
     n = len(b.labels)
     start = np.full(n, NEG, np.float32)
@@ -143,7 +165,7 @@ def build(words: list[list[tuple[int, bool]]], options: GraphOptions) -> LineGra
     weights = np.array([weight for _, weight in b.arcs.values()], dtype=np.float32)
     return LineGraph(labels=np.array(b.labels, np.int64), roles=np.array(b.roles, np.int8), arcs=arcs, arc_weight=weights, start=start,
                      final=final, unit_states=np.array(b.unit_states, np.int64), word_of_unit=np.array(b.word_of_unit, np.int64),
-                     segmental=b.segmental)
+                     segmental=b.segmental, lift_states=np.array(b.lift_states, np.int64))
 
 
 @dataclass
@@ -161,6 +183,7 @@ class Packed:
     final: torch.Tensor
     unit_states: torch.Tensor
     segmental: bool
+    lift_states: torch.Tensor | None = None
 
     def to(self, device) -> Packed:
         return Packed(**{k: (v.to(device) if isinstance(v, torch.Tensor) else v) for k, v in self.__dict__.items()})
@@ -197,6 +220,7 @@ def pack(graphs: list[LineGraph], device=None) -> Packed:
     final = np.full((batch, n), NEG, np.float32)
     units = max(1, max(len(g.unit_states) for g in graphs))
     unit_states = np.full((batch, units), -1, np.int64)
+    lift_states = np.full((batch, units), -1, np.int64)
     for b, g in enumerate(graphs):
         s = g.n_states
         labels[b, :s] = g.labels
@@ -204,6 +228,8 @@ def pack(graphs: list[LineGraph], device=None) -> Packed:
         start[b, :s] = g.start
         final[b, :s] = g.final
         unit_states[b, : len(g.unit_states)] = g.unit_states
+        if g.lift_states is not None:
+            lift_states[b, : len(g.lift_states)] = g.lift_states
         src, dst, arc_kind = g.arcs[:, 0], g.arcs[:, 1], g.arcs[:, 2]
         slot_in = _slots(dst)
         slot_out = _slots(src)
@@ -217,7 +243,7 @@ def pack(graphs: list[LineGraph], device=None) -> Packed:
                     weight=torch.from_numpy(weight), enter=torch.from_numpy(kind == ENTER), stay=torch.from_numpy(kind == STAY),
                     self_loop=torch.from_numpy(self_loop), succ=torch.from_numpy(succ), succ_valid=torch.from_numpy(succ_valid),
                     start=torch.from_numpy(start), final=torch.from_numpy(final), unit_states=torch.from_numpy(unit_states),
-                    segmental=graphs[0].segmental)
+                    segmental=graphs[0].segmental, lift_states=torch.from_numpy(lift_states))
     return packed.to(device) if device is not None else packed
 
 
@@ -228,10 +254,23 @@ def garbage_scores(scores: torch.Tensor, options: GraphOptions) -> torch.Tensor:
     return torch.log(-torch.expm1(log_gap)).clamp(min=-1e4) - options.garbage_frame
 
 
-def emissions(scores: torch.Tensor, packed: Packed, garbage: torch.Tensor) -> torch.Tensor:
+def lift_scores(scores: torch.Tensor, options: GraphOptions, open_frames: torch.Tensor | None = None) -> torch.Tensor | None:
+    if not (options.lifts and options.segmental):
+        return None
+    lift = scores[..., GAP] - options.lift_frame
+    if open_frames is None:
+        return lift
+    return lift - CLOSED_FRAME * (~open_frames.to(scores.device)).to(scores.dtype)
+
+
+def emissions(scores: torch.Tensor, packed: Packed, garbage: torch.Tensor, lift: torch.Tensor | None = None) -> torch.Tensor:
     batch, frames, n_labels = scores.shape
-    extended = torch.cat([scores, garbage.unsqueeze(-1)], dim=-1)
-    index = torch.where(packed.labels < 0, n_labels, packed.labels)
+    if lift is None:
+        extended = torch.cat([scores, garbage.unsqueeze(-1)], dim=-1)
+        index = torch.where(packed.labels < 0, n_labels, packed.labels)
+    else:
+        extended = torch.cat([scores, garbage.unsqueeze(-1), lift.unsqueeze(-1)], dim=-1)
+        index = torch.where(packed.labels < 0, n_labels - 1 - packed.labels, packed.labels)
     return extended.gather(2, index.unsqueeze(1).expand(batch, frames, index.shape[1]))
 
 
@@ -506,11 +545,12 @@ def with_ink_prior(scores: torch.Tensor, empty: torch.Tensor | None, penalty: fl
 
 def nll(logp: torch.Tensor, boundary_logits: torch.Tensor | None, graphs: Packed, lengths: torch.Tensor, options: GraphOptions,
         normalise: bool = True, log_prior: torch.Tensor | None = None, prior_scale: float = 0.0,
-        empty: torch.Tensor | None = None) -> torch.Tensor:
+        empty: torch.Tensor | None = None, open_frames: torch.Tensor | None = None) -> torch.Tensor:
     scores = with_ink_prior(sequence_scores(logp, options.topology, log_prior, prior_scale), empty, options.ink_prior)
     batch, frames, _ = scores.shape
     logb, log1mb = boundary_logs(boundary_logits if options.segmental else None, (batch, frames), scores)
-    E = emissions(scores, graphs, garbage_scores(scores if options.garbage == "any" else logp, options))
+    E = emissions(scores, graphs, garbage_scores(scores if options.garbage == "any" else logp, options),
+                  lift_scores(scores, options, open_frames))
     loglik = log_likelihood(E, logb, log1mb, graphs, lengths)
     if options.segmental and normalise:
         loglik = loglik - free_log_partition(scores, logb, log1mb, lengths)

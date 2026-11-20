@@ -1,0 +1,73 @@
+{
+ "base": {},
+ "snap-cuts": {
+  "lift_snap": "cuts"
+ },
+ "lifts f0 e-8": {
+  "lifts": true,
+  "lift_enter": -8.0,
+  "lift_snap": "lifts"
+ },
+ "keep": {
+  "inner_edges": "keep"
+ },
+ "keep snap-cuts": {
+  "inner_edges": "keep",
+  "lift_snap": "cuts"
+ },
+ "keep lifts f0 e-6": {
+  "inner_edges": "keep",
+  "lifts": true,
+  "lift_frame": 0.0,
+  "lift_enter": -6.0,
+  "lift_snap": "lifts"
+ },
+ "keep lifts f0 e-8": {
+  "inner_edges": "keep",
+  "lifts": true,
+  "lift_frame": 0.0,
+  "lift_enter": -8.0,
+  "lift_snap": "lifts"
+ },
+ "keep lifts f0 e-10": {
+  "inner_edges": "keep",
+  "lifts": true,
+  "lift_frame": 0.0,
+  "lift_enter": -10.0,
+  "lift_snap": "lifts"
+ },
+ "keep lifts f0 e-12": {
+  "inner_edges": "keep",
+  "lifts": true,
+  "lift_frame": 0.0,
+  "lift_enter": -12.0,
+  "lift_snap": "lifts"
+ },
+ "keep lifts f1 e-10": {
+  "inner_edges": "keep",
+  "lifts": true,
+  "lift_frame": 1.0,
+  "lift_enter": -10.0,
+  "lift_snap": "lifts"
+ },
+ "keep lifts f1 e-14": {
+  "inner_edges": "keep",
+  "lifts": true,
+  "lift_frame": 1.0,
+  "lift_enter": -14.0,
+  "lift_snap": "lifts"
+ },
+ "keep lifts f0 e-8 +cuts": {
+  "inner_edges": "keep",
+  "lifts": true,
+  "lift_frame": 0.0,
+  "lift_enter": -8.0,
+  "lift_snap": "cuts"
+ },
+ "keep lifts f0 e-8 nosnap": {
+  "inner_edges": "keep",
+  "lifts": true,
+  "lift_frame": 0.0,
+  "lift_enter": -8.0
+ }
+}
