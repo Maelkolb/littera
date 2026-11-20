@@ -35,12 +35,13 @@ BASE = {"pool": [POOL], "init": FT3, "presets": {"humboldt_ft": "markup", "synth
 VERIFY = {"confusions": "/vol/verify/confusions.json", "negatives": 6, "weight": 1.0, "margin": 4.0, "tau": 2.0}
 RUNS = {
     "v1-smoke": {"train": {"steps": 20, "max_lines": 400, "val_lines": 64, "val_every": 20, "workers": 2}, "verify": {}},
+    "v0-ft3": {"train": {"steps": 1, "lr": 0.0, "warmup": 1, "val_every": 1}, "verify": {}},
     "v1": {"train": {}, "verify": {}},
     "v1-strong": {"train": {"lr": 1e-4}, "verify": {"weight": 3.0}},
 }
 
 
-@app.function(image=image, gpu="A10G", cpu=4, memory=16384, volumes={VOL: volume}, timeout=4 * 3600, max_containers=2)
+@app.function(image=image, gpu="A10G", cpu=4, memory=16384, volumes={VOL: volume}, timeout=4 * 3600, max_containers=3)
 def train(config: dict, verify: dict) -> str:
     from littera.train import TrainConfig
     from littera.verify import VerifyConfig, run
